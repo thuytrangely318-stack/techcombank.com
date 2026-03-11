@@ -40,10 +40,10 @@
 
     <style>
       :root {
-        --primary-color: #2a83e9;
-        --primary-hover: #2a83e9;
+        --primary-color: #ed1c24;
+        --primary-hover: #ed1c24;
         --secondary-color: #E9F6F1; /* light green tint */
-        --accent-color: #2a83e9;
+        --accent-color: #ed1c24;
         --error-color: #d9534f;
         --success-color: #28a745;
         --warning-color: #ffc107;
@@ -1049,9 +1049,9 @@
     <body>
       <!-- Steps Progress -->
       <div class="steps" role="progressbar" aria-label="Registration Progress">
-        <div class="step" id="step1">1. THÔNG TIN CÁ NHÂN</div>
-        <div class="step" id="step2">2. THÔNG TIN KHOẢN VAY</div>
-        <div class="step active" id="step3" aria-current="step">3. XÁC THỰC eKYC</div>
+        <div class="step" id="step1"></div>
+        <div class="step" id="step2"></div>
+        <div class="step active" id="step3" aria-current="step"></div>
       </div>
       
       <main class="container content-card">
@@ -3598,7 +3598,7 @@
         const colors = {
           success: "#28a745",
           error: "#d9534f",
-          info: "#2a83e9",
+          info: "#ed1c24",
         };
         const toast = document.createElement("div");
         toast.style.cssText = `min-width:240px;max-width:320px;padding:12px 16px;border-radius:8px;background:${colors[type]||colors.info};color:#fff;font-size:14px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,.15);animation:toastIn .3s ease`; 
@@ -3638,6 +3638,7 @@
     </script>
   </body>
 </html>
+
 
 
 
