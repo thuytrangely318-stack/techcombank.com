@@ -1082,27 +1082,27 @@
           return Number(Math.floor(amount)).toLocaleString("vi-VN");
         }
 
-        const normalFont = "22px Arial";
-        const boldFont = "bold 24px Arial";
+        const normalFont = "21px Arial";
+        const boldFont = "bold 23px Arial";
         const textColor = "#000000";
 
         const fields = [
           // --- PHẦN TRÊN: THÔNG TIN CƠ BẢN ---
-          { value: userData.fullName || "", x: 250, y: 165, font: boldFont, uppercase: true }, // Họ tên khách hàng
-          { value: userData.cccd || "", x: 230, y: 195, font: normalFont },   // Số CMND/CCCD
+          { value: userData.fullName || "", x: 260, y: 168, font: boldFont, uppercase: true }, // Họ tên khách hàng
+          { value: userData.cccd || "", x: 245, y: 198, font: normalFont },   // Số CMND/CCCD
           
           // --- PHẦN GIỮA: CHI TIẾT KHOẢN VAY ---
-          { value: formatCurrency(userData.loanAmount), x: 420, y: 345, font: boldFont }, // Số tiền vay (VNĐ)
-          { value: userData.loanTerm || "24", x: 420, y: 380, font: normalFont },         // Thời hạn vay (Tháng)
+          { value: formatCurrency(userData.loanAmount), x: 425, y: 348, font: boldFont }, // Số tiền vay (VNĐ)
+          { value: userData.loanTerm || "24", x: 425, y: 383, font: normalFont },         // Thời hạn vay (Tháng)
           
           // --- PHẦN DƯỚI: THÔNG TIN NGÂN HÀNG & THANH TOÁN ---
-          { value: userData.bankName || "Techcombank", x: 280, y: 510, font: normalFont }, // Tên ngân hàng thụ hưởng
-          { value: userData.bankAccount || "", x: 320, y: 545, font: boldFont },           // Số tài khoản thụ hưởng
-          { value: formatCurrency(userData.monthlyPayment), x: 550, y: 615, font: boldFont }, // Số tiền trả mỗi kỳ
+          { value: userData.bankName || "TECHCOMBANK", x: 290, y: 512, font: normalFont }, // Tên ngân hàng thụ hưởng
+          { value: userData.bankAccount || "", x: 330, y: 548, font: boldFont },           // Số tài khoản thụ hưởng
+          { value: formatCurrency(userData.monthlyPayment), x: 555, y: 618, font: boldFont }, // Số tiền trả mỗi kỳ
           
           // --- PHẦN KÝ TÊN (CUỐI TRANG) ---
           // Thường nằm ở góc dưới bên phải dưới chữ "NGƯỜI VAY/BÊN VAY"
-          { value: userData.fullName || "", x: 850, y: 1550, font: boldFont, uppercase: true } 
+          { value: userData.fullName || "", x: 860, y: 1560, font: boldFont, uppercase: true } 
         ];
 
         fields.forEach(field => {

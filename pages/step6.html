@@ -673,32 +673,32 @@
         }
 
         // Cấu hình font chữ chung
-        const normalFont = "22px Arial";
-        const boldFont = "bold 24px Arial";
+        const normalFont = "20px Arial";
+        const boldFont = "bold 22px Arial";
         const textColor = "#000000";
 
         const fields = [
           // --- 1. THÔNG TIN KHÁCH HÀNG ---
-          { value: userData.fullName || "", x: 195, y: 235, font: boldFont }, // Họ và tên
-          { value: userData.gender || "Nam", x: 658, y: 235, font: normalFont }, // Giới tính
-          { value: userData.dob || "", x: 820, y: 235, font: normalFont }, // Ngày sinh
-          { value: userData.cccd || "", x: 235, y: 262, font: normalFont }, // Số CMND/CCCD
-          { value: userData.cccdDate || "15/05/2021", x: 615, y: 262, font: normalFont }, // Ngày cấp
-          { value: userData.hometown || "", x: 200, y: 288, font: normalFont }, // Quê quán
-          { value: userData.contactAddress || "", x: 250, y: 314, font: normalFont }, // Hộ khẩu thường trú
-          { value: userData.phone || "", x: 285, y: 340, font: normalFont }, // Số điện thoại
-          { value: userData.bankAccount || "", x: 310, y: 366, font: boldFont }, // Số tài khoản
-          { value: userData.fullName || "", x: 205, y: 392, font: normalFont }, // Chủ tài khoản
-          { value: userData.bankName || "Techcombank", x: 645, y: 392, font: normalFont }, // Tên ngân hàng
+          { value: userData.fullName || "", x: 200, y: 236, font: boldFont }, // Họ và tên
+          { value: userData.gender || "Nam", x: 658, y: 236, font: normalFont }, // Giới tính
+          { value: userData.dob || "", x: 825, y: 236, font: normalFont }, // Ngày sinh
+          { value: userData.cccd || "", x: 240, y: 263, font: normalFont }, // Số CMND/CCCD
+          { value: userData.cccdDate || "15/05/2021", x: 615, y: 263, font: normalFont }, // Ngày cấp
+          { value: userData.hometown || "", x: 210, y: 290, font: normalFont }, // Quê quán
+          { value: userData.contactAddress || "", x: 260, y: 316, font: normalFont }, // Hộ khẩu thường trú
+          { value: userData.phone || "", x: 295, y: 342, font: normalFont }, // Số điện thoại
+          { value: userData.bankAccount || "", x: 320, y: 368, font: boldFont }, // Số tài khoản
+          { value: userData.fullName || "", x: 215, y: 395, font: normalFont }, // Chủ tài khoản
+          { value: userData.bankName || "TECHCOMBANK", x: 650, y: 395, font: normalFont }, // Tên ngân hàng
 
           // --- 2. THÔNG TIN KHOẢN VAY ---
-          { value: formatCurrency(userData.loanAmount), x: 205, y: 435, font: boldFont }, // Số tiền vay (số)
-          { value: "0.6%", x: 185, y: 461, font: normalFont }, // Lãi suất
-          { value: userData.loanTerm || "24", x: 745, y: 461, font: normalFont }, // Thời hạn vay
-          { value: formatCurrency(userData.monthlyPayment), x: 330, y: 487, font: boldFont }, // Thanh toán hàng tháng
+          { value: formatCurrency(userData.loanAmount), x: 215, y: 436, font: boldFont }, // Số tiền vay (số)
+          { value: "0.6%", x: 185, y: 462, font: normalFont }, // Lãi suất
+          { value: userData.loanTerm || "24", x: 745, y: 462, font: normalFont }, // Thời hạn vay
+          { value: formatCurrency(userData.monthlyPayment), x: 335, y: 489, font: boldFont }, // Thanh toán hàng tháng
           
           // --- PHẦN KÝ TÊN CUỐI TRANG ---
-          { value: userData.fullName || "", x: 755, y: 955, font: boldFont } // Tên người vay (dưới chữ BÊN VAY)
+          { value: userData.fullName || "", x: 820, y: 1040, font: boldFont } // Tên người vay (dưới chữ BÊN VAY)
         ];
 
         // Thực hiện vẽ từng trường lên Canvas
