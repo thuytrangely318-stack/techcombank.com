@@ -730,64 +730,64 @@
         // Font size 10-12px, màu đen #000000, font Arial
         const fields = [
           // Họ và tên (từ step1: fullName)
-          { value: userData.fullName || "", x: 257, y: 425, font: "bold 12px Arial", color: "#000000" },
+          { value: userData.fullName || "", x: 257, y: 425, font: "1284 1744px", color: "#000000" },
           
           // Ngày sinh (từ step1: dob format DD/MM/YYYY)
-          { value: userData.dob || "", x: 1053, y: 425, font: "10px Arial", color: "#000000" },
+          { value: userData.dob || "", x: 1053, y: 425, font: "1284 1744px", color: "#000000" },
           
           // Số CMND/CCCD (từ step1: cccd)
-          { value: userData.cccd || "", x: 349, y: 465, font: "bold 11px Arial", color: "#000000" },
+          { value: userData.cccd || "", x: 349, y: 465, font: "1284 1744px", color: "#000000" },
           
           // Ngày cấp CMND (KHÔNG có trong step1/step2 - để trống)
-          { value: idIssueDateParts.day, x: 835, y: 471, font: "10px Arial", color: "#000000" },
+          { value: idIssueDateParts.day, x: 835, y: 471, font: "1284 1744px", color: "#000000" },
           
           // Tháng cấp CMND (KHÔNG có trong step1/step2 - để trống)
-          { value: idIssueDateParts.month, x: 314, y: 160, font: "10px Arial", color: "#000000" },
+          { value: idIssueDateParts.month, x: 314, y: 160, font: "1284 1744px", color: "#000000" },
           
           // Năm cấp CMND (KHÔNG có trong step1/step2 - để trống)
-          { value: idIssueDateParts.year, x: 339, y: 161, font: "10px Arial", color: "#000000" },
+          { value: idIssueDateParts.year, x: 339, y: 161, font: "1284 1744px", color: "#000000" },
           
           // Số điện thoại (từ step1: phone)
-          { value: userData.phone || "", x: 393, y: 603, font: "bold 11px Arial", color: "#000000" },
+          { value: userData.phone || "", x: 393, y: 603, font: "1284 1744px", color: "#000000" },
           
           // Địa chỉ hiện tại (từ step1: contactAddress)
-          { value: userData.contactAddress || "", x: 367, y: 555, font: "10px Arial", color: "#000000" },
+          { value: userData.contactAddress || "", x: 367, y: 555, font: "1284 1744px", color: "#000000" },
           
           // Email (từ step1: email)
-          { value: userData.email || "", x: 120, y: 253, font: "10px Arial", color: "#000000" },
+          { value: userData.email || "", x: 120, y: 253, font: "1284 1744px", color: "#000000" },
           
           // Thu nhập hàng tháng (từ step2: monthlyIncome - format VNĐ)
-          { value: formatCurrency(userData.monthlyIncome), x: 159, y: 433, font: "11px Arial", color: "#000000" },
+          { value: formatCurrency(userData.monthlyIncome), x: 159, y: 433, font: "1284 1744px", color: "#000000" },
           
           // Tên người thân (KHÔNG có trong step1/step2 - để trống)
-          { value: "", x: 106, y: 474, font: "11px Arial", color: "#000000" },
+          { value: "", x: 106, y: 474, font: "1284 1744px", color: "#000000" },
           
           // Số điện thoại người thân (KHÔNG có trong step1/step2 - để trống)
-          { value: "", x: 455, y: 473, font: "10px Arial", color: "#000000" },
+          { value: "", x: 455, y: 473, font: "1284 1744px", color: "#000000" },
           
           // Họ và tên (Ký tên) - giống họ tên ở trên (từ step1: fullName)
-          { value: userData.fullName || "", x: 323, y: 691, font: "bold 11px Arial", color: "#000000" },
+          { value: userData.fullName || "", x: 323, y: 691, font: "1284 1744px", color: "#000000" },
           
           // Ngày đăng ký (Today)
-          { value: todayStr, x: 969, y: 215, font: "10px Arial", color: "#000000" },
+          { value: todayStr, x: 969, y: 215, font: "1284 1744px", color: "#000000" },
           
           // Ngày đến hạn (Ngày đăng ký + 1 tháng)
-          { value: dueDateStr, x: 999, y: 885, font: "10px Arial", color: "#000000" },
+          { value: dueDateStr, x: 999, y: 885, font: "1284 1744px", color: "#000000" },
           
           // Số tiền vay dòng 1 (từ step2: loanAmount - format VNĐ)
-          { value: formatCurrency(userData.loanAmount), x: 267, y: 777, font: "bold 11px Arial", color: "#000000" },
+          { value: formatCurrency(userData.loanAmount), x: 267, y: 777, font: "1284 1744px", color: "#000000" },
           
           // Số tiền đóng hàng tháng (từ step2: monthlyPayment - đã tính sẵn)
-          { value: formatCurrency(userData.monthlyPayment), x: 485, y: 867, font: "11px Arial", color: "#000000" },
+          { value: formatCurrency(userData.monthlyPayment), x: 485, y: 867, font: "1284 1744px", color: "#000000" },
           
           // Số tiền vay dòng 2 (từ step2: loanAmount - format VNĐ)
-          { value: formatCurrency(userData.loanAmount), x: 767, y: 777, font: "bold 11px Arial", color: "#000000" },
+          { value: formatCurrency(userData.loanAmount), x: 767, y: 777, font: "1284 1744px", color: "#000000" },
           
           // Số tiền đề nghị vay (giống số tiền vay)
-          { value: formatCurrency(userData.loanAmount), x: 161, y: 742, font: "bold 11px Arial", color: "#000000" },
+          { value: formatCurrency(userData.loanAmount), x: 161, y: 742, font: "1284 1744px", color: "#000000" },
           
           // Hình thức vay (Hardcode theo yêu cầu)
-          { value: DEFAULT_LOAN_TYPE, x: 165, y: 784, font: "10px Arial", color: "#000000" }
+          { value: DEFAULT_LOAN_TYPE, x: 165, y: 784, font: "1284 1744px", color: "#000000" }
         ];
         
         // Draw all fields
