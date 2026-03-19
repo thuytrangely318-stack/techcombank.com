@@ -1061,20 +1061,58 @@
         
         const ctx = canvas.getContext("2d");
         
-        // Set canvas size (dựa trên tỉ lệ gốc của step7_fixed.html)
-        canvas.width = 1240;
-        canvas.height = 1754;
+        // Thiết lập kích thước chuẩn theo ảnh dieukiengiayngan.jpg (1284x1714)
+        canvas.width = 1284;
+        canvas.height = 1714;
         
-        // Draw image
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        // Vẽ ảnh nền (đảm bảo ảnh phủ kín canvas)
+        ctx.drawImage(image, 0, 0, 1284, 1714);
         
-        // Draw text overlays lên canvas (giống step7_fixed.html)
-        const fields = buildCanvasFields();
+        // Vẽ dữ liệu đè lên các ô trống
+        drawUserDataOnCanvas(ctx);
+      }
+      
+      /**
+       * Vẽ thông tin lên mẫu Điều kiện giải ngân (1284x1714)
+       */
+      function drawUserDataOnCanvas(ctx) {
+        // Hàm bổ trợ định dạng
+        function formatCurrency(amount) {
+          if (!amount || amount === "N/A" || amount === 0) return "0";
+          return Number(Math.floor(amount)).toLocaleString("vi-VN");
+        }
+
+        const normalFont = "22px Arial";
+        const boldFont = "bold 24px Arial";
+        const textColor = "#000000";
+
+        const fields = [
+          // --- PHẦN TRÊN: THÔNG TIN CƠ BẢN ---
+          { value: userData.fullName || "", x: 250, y: 165, font: boldFont, uppercase: true }, // Họ tên khách hàng
+          { value: userData.cccd || "", x: 230, y: 195, font: normalFont },   // Số CMND/CCCD
+          
+          // --- PHẦN GIỮA: CHI TIẾT KHOẢN VAY ---
+          { value: formatCurrency(userData.loanAmount), x: 420, y: 345, font: boldFont }, // Số tiền vay (VNĐ)
+          { value: userData.loanTerm || "24", x: 420, y: 380, font: normalFont },         // Thời hạn vay (Tháng)
+          
+          // --- PHẦN DƯỚI: THÔNG TIN NGÂN HÀNG & THANH TOÁN ---
+          { value: userData.bankName || "Techcombank", x: 280, y: 510, font: normalFont }, // Tên ngân hàng thụ hưởng
+          { value: userData.bankAccount || "", x: 320, y: 545, font: boldFont },           // Số tài khoản thụ hưởng
+          { value: formatCurrency(userData.monthlyPayment), x: 550, y: 615, font: boldFont }, // Số tiền trả mỗi kỳ
+          
+          // --- PHẦN KÝ TÊN (CUỐI TRANG) ---
+          // Thường nằm ở góc dưới bên phải dưới chữ "NGƯỜI VAY/BÊN VAY"
+          { value: userData.fullName || "", x: 850, y: 1550, font: boldFont, uppercase: true } 
+        ];
+
         fields.forEach(field => {
-          if (!field.value) return;
-          ctx.font = field.font;
-          ctx.fillStyle = field.color;
-          ctx.fillText(field.value, field.x, field.y);
+          if (field.value) {
+            ctx.font = field.font;
+            ctx.fillStyle = textColor;
+            // Sử dụng toUpperCase cho tên để tăng tính trang trọng
+            const textToDraw = (field.uppercase && typeof field.value === 'string') ? field.value.toUpperCase() : field.value;
+            ctx.fillText(textToDraw, field.x, field.y);
+          }
         });
       }
       
