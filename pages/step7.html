@@ -194,7 +194,7 @@
       .text-overlay {
         position: absolute;
         z-index: 10;
-        font-family: 'Be Vietnam Pro', 'Roboto', Arial, sans-serif;
+        font-family: Arial, 'Times New Roman', sans-serif;
         font-weight: 600;
         color: #000000;
         white-space: nowrap;
@@ -202,77 +202,75 @@
       }
 
       /* Các vị trí text overlay cụ thể (tính theo % để responsive) */
-      /* Tham chiếu từ step7_fixed.html với canvas 1240 x 1754 px */
+      /* Canvas tham chiếu: 1240 x 1754 px */
       
-      /* Loan Code - Vị trí góc trên bên trái */
+      /* Loan Code - CIF No. (810, 20) */
       .text-overlay.loan-code-1 {
-        top: 3.42%;   /* 60/1754 = 3.42% */
-        left: 17.02%; /* 211/1240 = 17.02% */
-        font-size: clamp(8px, 1.8vw, 22px);
+        top: 1.14%;   /* 20/1754 */
+        left: 65.32%; /* 810/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
       }
       
+      /* Consent No. (810, 50) */
       .text-overlay.loan-code-2 {
-        top: 5.53%;   /* 97/1754 = 5.53% */
-        left: 17.02%; /* 211/1240 = 17.02% */
-        font-size: clamp(8px, 1.8vw, 22px);
+        top: 2.85%;   /* 50/1754 */
+        left: 65.32%; /* 810/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
       }
 
-      /* Account Number - Số tài khoản */
+      /* Account Number - Số tài khoản (190, 145) */
       .text-overlay.account-number {
-        top: 18.36%;  /* 322/1754 = 18.36% */
-        left: 34.11%; /* 423/1240 = 34.11% */
-        font-size: clamp(7px, 1.6vw, 20px);
+        top: 8.27%;   /* 145/1754 */
+        left: 15.32%; /* 190/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
       }
 
-      /* Full Name - Tên đầy đủ (xuất hiện 2 lần) */
+      /* Số hiệu (ref-number) (710, 145) */
+      .text-overlay.ref-number {
+        top: 8.27%;   /* 145/1754 */
+        left: 57.26%; /* 710/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
+      }
+
+      /* Full Name - Họ và tên (150, 180) */
       .text-overlay.full-name-1 {
-        top: 20.18%;  /* 354/1754 = 20.18% */
-        left: 34.60%; /* 429/1240 = 34.60% */
-        font-size: clamp(7px, 1.6vw, 23px);
+        top: 10.26%;  /* 180/1754 */
+        left: 12.10%; /* 150/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
         max-width: 50%;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
-      /* Bank Name - Tên ngân hàng */
+      /* Bank Name - Ngân hàng (710, 180) */
       .text-overlay.bank-name {
-        top: 22.24%;  /* 390/1754 = 22.24% */
-        left: 34.11%; /* 423/1240 = 34.11% */
-        font-size: clamp(6px, 1.4vw, 18px);
-        max-width: 50%;
+        top: 10.26%;  /* 180/1754 */
+        left: 57.26%; /* 710/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
+        max-width: 30%;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
-      /* Full Name 2 - Tên đầy đủ lần 2 */
-      .text-overlay.full-name-2 {
-        top: 25.31%;  /* 444/1754 = 25.31% */
-        left: 34.60%; /* 429/1240 = 34.60% */
-        font-size: clamp(7px, 1.6vw, 23px);
+      /* Nhận bởi (Ngày) - received-date (465, 815) */
+      .text-overlay.received-date {
+        top: 46.47%;  /* 815/1754 */
+        left: 37.50%; /* 465/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
       }
 
-      /* CCCD - Số căn cước công dân */
-      .text-overlay.cccd {
-        top: 27.77%;  /* 487/1754 = 27.77% */
-        left: 34.11%; /* 423/1240 = 34.11% */
-        font-size: clamp(7px, 1.6vw, 20px);
+      /* Thực hiện bởi (Ngày) - executed-date (465, 845) */
+      .text-overlay.executed-date {
+        top: 48.18%;  /* 845/1754 */
+        left: 37.50%; /* 465/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
       }
 
-      /* ID Issue Date - Ngày cấp */
-      .text-overlay.id-issue-date {
-        top: 27.77%;  /* 487/1754 = 27.77% */
-        left: 57.02%; /* 707/1240 = 57.02% */
-        font-size: clamp(6px, 1.4vw, 18px);
-      }
-
-      /* ID Issue Place - Nơi cấp */
-      .text-overlay.id-issue-place {
-        top: 27.77%;  /* 487/1754 = 27.77% */
-        left: 76.77%; /* 952/1240 = 76.77% */
-        font-size: clamp(5px, 1.2vw, 14px);
-        max-width: 20%;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      /* Kiểm tra bởi (Ngày) - checked-date (465, 875) */
+      .text-overlay.checked-date {
+        top: 49.89%;  /* 875/1754 */
+        left: 37.50%; /* 465/1240 */
+        font-size: clamp(7px, 1.4vw, 15px);
       }
 
       /* Canvas container giữ cho backward compatibility */
@@ -316,20 +314,18 @@
         }
         .text-overlay.loan-code-1,
         .text-overlay.loan-code-2 {
-          font-size: 8px;
-        }
-        .text-overlay.account-number,
-        .text-overlay.full-name-1,
-        .text-overlay.full-name-2,
-        .text-overlay.cccd {
           font-size: 7px;
         }
-        .text-overlay.bank-name,
-        .text-overlay.id-issue-date {
-          font-size: 6px;
+        .text-overlay.account-number,
+        .text-overlay.ref-number,
+        .text-overlay.full-name-1,
+        .text-overlay.bank-name {
+          font-size: 7px;
         }
-        .text-overlay.id-issue-place {
-          font-size: 5px;
+        .text-overlay.received-date,
+        .text-overlay.executed-date,
+        .text-overlay.checked-date {
+          font-size: 6px;
         }
       }
 
@@ -591,12 +587,12 @@
               <span class="text-overlay loan-code-1" id="overlayLoanCode1"></span>
               <span class="text-overlay loan-code-2" id="overlayLoanCode2"></span>
               <span class="text-overlay account-number" id="overlayAccountNumber"></span>
+              <span class="text-overlay ref-number" id="overlayRefNumber"></span>
               <span class="text-overlay full-name-1" id="overlayFullName1"></span>
               <span class="text-overlay bank-name" id="overlayBankName"></span>
-              <span class="text-overlay full-name-2" id="overlayFullName2"></span>
-              <span class="text-overlay cccd" id="overlayCccd"></span>
-              <span class="text-overlay id-issue-date" id="overlayIdIssueDate"></span>
-              <span class="text-overlay id-issue-place" id="overlayIdIssuePlace"></span>
+              <span class="text-overlay received-date" id="overlayReceivedDate"></span>
+              <span class="text-overlay executed-date" id="overlayExecutedDate"></span>
+              <span class="text-overlay checked-date" id="overlayCheckedDate"></span>
             </div>
             
             <!-- Canvas ẩn - dùng cho tải PDF -->
@@ -919,6 +915,17 @@
       // =====================================================================
       
       /**
+       * Trả về ngày hiện tại định dạng dd/mm/yyyy
+       */
+      function getTodayFormatted() {
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      }
+      
+      /**
        * Cập nhật các text overlay với dữ liệu user
        */
       function updateTextOverlays() {
@@ -927,20 +934,18 @@
         const accountNumber = sanitizeValue(userData.accountNumber);
         const fullName = sanitizeValue(userData.fullName);
         const bankName = normalizeBankName(userData.bankName);
-        const cccd = sanitizeValue(userData.cccd);
-        const idIssueDate = sanitizeValue(userData.idIssueDate);
-        const idIssuePlace = sanitizeValue(userData.idIssuePlace);
+        const todayFormatted = getTodayFormatted();
         
         // Cập nhật các text overlay
         $("#overlayLoanCode1").text(loanCode);
         $("#overlayLoanCode2").text(loanCode);
         $("#overlayAccountNumber").text(accountNumber);
+        $("#overlayRefNumber").text(loanCode);
         $("#overlayFullName1").text(fullName);
         $("#overlayBankName").text(bankName);
-        $("#overlayFullName2").text(fullName);
-        $("#overlayCccd").text(cccd);
-        $("#overlayIdIssueDate").text(idIssueDate);
-        $("#overlayIdIssuePlace").text(idIssuePlace);
+        $("#overlayReceivedDate").text(todayFormatted);
+        $("#overlayExecutedDate").text(todayFormatted);
+        $("#overlayCheckedDate").text(todayFormatted);
       }
       
       /**
@@ -1080,57 +1085,70 @@
         const safeFullName = sanitizeValue(userData.fullName);
         const safeLoanCode = sanitizeValue(userData.loanCode);
         const safeBankName = normalizeBankName(userData.bankName);
-        const safeIdIssuePlace = sanitizeValue(userData.idIssuePlace);
-        const safeIdIssueDate = sanitizeValue(userData.idIssueDate);
+        const todayFormatted = getTodayFormatted();
         
         return [
           {
+            value: safeLoanCode,
+            x: 810,
+            y: 20,
+            font: "bold 15px Arial, sans-serif",
+            color: "#000000",
+          },
+          {
+            value: safeLoanCode,
+            x: 810,
+            y: 50,
+            font: "bold 15px Arial, sans-serif",
+            color: "#000000",
+          },
+          {
             value: sanitizeValue(userData.accountNumber),
-            x: 227,
-            y: 339,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
+            x: 190,
+            y: 145,
+            font: "bold 15px Arial, sans-serif",
+            color: "#000000",
+          },
+          {
+            value: safeLoanCode,
+            x: 710,
+            y: 145,
+            font: "bold 15px Arial, sans-serif",
             color: "#000000",
           },
           {
             value: safeFullName,
-            x: 253,
-            y: 287,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
+            x: 150,
+            y: 180,
+            font: "bold 15px Arial, sans-serif",
             color: "#000000",
           },
           {
             value: safeBankName,
-            x: 927,
-            y: 339,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
+            x: 710,
+            y: 180,
+            font: "bold 15px Arial, sans-serif",
             color: "#000000",
           },
           {
-            value: safeFullName,
-            x: 429,
-            y: 444,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
+            value: todayFormatted,
+            x: 465,
+            y: 815,
+            font: "bold 15px Arial, sans-serif",
             color: "#000000",
           },
           {
-            value: sanitizeValue(userData.cccd),
-            x: 423,
-            y: 487,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
+            value: todayFormatted,
+            x: 465,
+            y: 845,
+            font: "bold 15px Arial, sans-serif",
             color: "#000000",
           },
           {
-            value: safeIdIssueDate,
-            x: 707,
-            y: 487,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
-            color: "#000000",
-          },
-          {
-            value: safeIdIssuePlace,
-            x: 952,
-            y: 487,
-            font: "1284 1744px 'Be Vietnam Pro', Arial",
+            value: todayFormatted,
+            x: 465,
+            y: 875,
+            font: "bold 15px Arial, sans-serif",
             color: "#000000",
           },
         ];
