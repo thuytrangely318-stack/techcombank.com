@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Xem Hợp Đồng - FE Credit</title>
+<title>Xem Hồ Sơ Hợp Đồng - Techcombank</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
@@ -12,578 +12,652 @@
 <link rel="stylesheet" href="step1-style-guide.css" />
 <style>
 :root {
---primary-color: #2a83e9;
---primary-dark: #015C2E;
---primary-light: #9FE870;
---secondary-color: #f5f6f5;
---accent-color: #9FE870;
+  --primary-color: #2a83e9;
+  --primary-dark: #015C2E;
+  --primary-light: #9FE870;
+  --secondary-color: #f5f6f5;
+  --accent-color: #9FE870;
 }
 body {
-font-family: 'Roboto', sans-serif;
-font-size: 16px;
-background-color: var(--secondary-color);
-margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  background-color: var(--secondary-color);
+  margin: 0;
 }
 .fecredit-header {
-background: #fff !important;
-border-bottom: 1px solid #ECECEC;
-position: sticky;
-top: 0;
-z-index: 1000;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-padding: 15px 0;
+  background: #fff !important;
+  border-bottom: 1px solid #ECECEC;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 15px 0;
 }
 .container-main {
-max-width: 90%;
-margin: 0 auto;
-padding: 25px;
-background: white;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0,0,0,0.1);
-position: relative;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 25px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
 }
 @media (min-width: 768px) {
-.container-main {
-max-width: 700px;
-margin: 20px auto;
-}
+  .container-main {
+    max-width: 700px;
+    margin: 20px auto;
+  }
 }
 .nav-tabs {
-display: flex;
-justify-content: space-around;
-margin: 0 0 25px;
-flex-wrap: nowrap;
-overflow-x: auto;
-white-space: nowrap;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 0 25px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 .nav-tabs .nav-link {
-background-color: #d3d3d3;
-color: #fff;
-border-radius: 20px;
-padding: 8px 16px;
-font-weight: 500;
-font-size: 14px;
-width: 100%;
-margin: 0 5px;
-transition: background-color 0.3s;
+  background-color: #d3d3d3;
+  color: #fff;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  width: 100%;
+  margin: 0 5px;
+  transition: background-color 0.3s;
 }
 .nav-tabs .nav-link.active {
-background-color: var(--primary-color);
-color: #fff;
+  background-color: var(--primary-color);
+  color: #fff;
 }
 .nav-tabs .nav-link:hover {
-background-color: var(--primary-light);
-color: var(--primary-dark);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
 }
 @media (max-width: 767px) {
-.nav-tabs .nav-link {
-font-size: 10px;
-padding: 6px 8px;
-}
-.container-main {
-max-width: 100% !important;
-padding: 12px !important;
-margin: 0 !important;
-}
+  .nav-tabs .nav-link {
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+  .container-main {
+    max-width: 100% !important;
+    padding: 12px !important;
+    margin: 0 !important;
+  }
 }
 .step-title {
-color: var(--primary-color);
-font-size: 18px;
-font-weight: 700;
-margin-bottom: 20px;
-text-transform: uppercase;
-text-align: center;
+  color: var(--primary-color);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-align: center;
 }
 .step-description {
-font-size: 14px;
-text-align: center;
-margin-bottom: 20px;
-color: #1a3c87;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1a3c87;
 }
-.canvas-container {
-position: relative;
-margin: 20px auto;
-max-width: 100%;
-overflow-x: auto;
+/* Profile form container */
+.profile-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  margin: 20px auto;
+  max-height: 70vh;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  background: #f8f9fa;
 }
-#contractCanvas {
-width: 100%;
-max-width: 100%;
-height: auto;
-display: block;
-border: 2px solid #e9ecef;
-border-radius: 8px;
-image-rendering: -webkit-optimize-contrast;
-image-rendering: crisp-edges;
+.profile-scale-wrapper {
+  transform-origin: top left;
+  display: inline-block;
 }
-@media (max-width: 768px) {
-.canvas-container {
-margin: 10px 0;
-padding: 0 10px;
+.profile-container {
+  width: 1284px;
+  height: 1795px;
+  position: relative;
+  background-image: url('/assets/img/anhhopdongvay.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+  font-family: 'Roboto', Arial, sans-serif;
 }
-#contractCanvas {
-max-width: calc(100vw - 40px);
-border-radius: 4px;
-}
-}
-#contractCanvas.loading {
-opacity: 0.5;
-background: rgba(248, 249, 250, 0.9);
+.profile-field {
+  position: absolute;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 .btn-download {
-background-color: #17a2b8;
-color: #fff;
-font-size: 14px;
-font-weight: 700;
-padding: 10px 20px;
-border-radius: 20px;
-transition: all 0.3s ease;
+  background-color: #17a2b8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
 }
 .btn-download:hover {
-background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 .btn-primary {
-background-color: var(--primary-color);
-border: none;
-border-radius: 20px;
-padding: 10px 20px;
-font-weight: 700;
-font-size: 14px;
-transition: all 0.3s ease;
-margin: 5px;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  margin: 5px;
 }
 .btn-primary:hover {
-background-color: var(--primary-dark);
-box-shadow: 0 4px 12px rgba(0,153,79,0.3);
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(0,153,79,0.3);
 }
 .btn-secondary {
-background-color: #6c757d;
-color: #fff;
-border: none;
-border-radius: 20px;
-padding: 10px 20px;
-font-weight: 700;
-font-size: 14px;
-transition: all 0.3s ease;
-margin: 5px;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  margin: 5px;
 }
 .btn-secondary:hover {
-background-color: #5a6268;
+  background-color: #5a6268;
 }
 .button-group {
-display: flex;
-justify-content: center;
-gap: 15px;
-margin-top: 15px;
-flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
 }
 @media (max-width: 767px) {
-.button-group {
-flex-direction: row;
-justify-content: center;
-flex-wrap: nowrap;
-}
-.button-group a, .button-group button {
-flex: 1;
-text-align: center;
-padding: 8px 10px;
-font-size: 12px;
-}
+  .button-group {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  .button-group a, .button-group button {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
 }
 .divider-blue {
-border-top: 1px solid #b3cde0;
-margin: 15px 0;
+  border-top: 1px solid #b3cde0;
+  margin: 15px 0;
 }
 .error-message {
-color: #ff4d4f;
-font-size: 14px;
-font-weight: 500;
-text-align: center;
-margin-top: 5px;
-padding: 6px;
-background-color: #ffe6e6;
-border-radius: 5px;
-display: none;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 5px;
+  padding: 6px;
+  background-color: #ffe6e6;
+  border-radius: 5px;
+  display: none;
 }
-.canvas-loading-overlay {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-background: rgba(255,255,255,0.95);
-padding: 20px 30px;
-border-radius: 8px;
-box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-display: none;
-z-index: 10;
-}
-.canvas-loading-overlay.show {
-display: block;
-}
-.spinner {
-border: 3px solid #f3f3f3;
-border-top: 3px solid #2a83e9;
-border-radius: 50%;
-width: 30px;
-height: 30px;
-animation: spin 1s linear infinite;
-margin: 0 auto 10px;
+.spinner-small {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 @keyframes spin {
-0% { transform: rotate(0deg); }
-100% { transform: rotate(360deg); }
-}
-.btn-download .spinner-small {
-display: inline-block;
-width: 14px;
-height: 14px;
-border: 2px solid #fff;
-border-top: 2px solid transparent;
-border-radius: 50%;
-animation: spin 0.8s linear infinite;
-margin-right: 8px;
-vertical-align: middle;
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
 </head>
 <body>
 <header class="fecredit-header">
-<div class="container-header">
-<div style="flex: 0 0 auto;">
-<a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Techcombank_logo.png"
-alt="FE CREDIT - Ngân hàng tài chính tiêu dùng hàng đầu Việt Nam"
-style="object-fit: contain; height: 40px; max-width: 200px;"
-width="150"
-height="40">
-<span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #2a83e9; display: none;" class="logo-text">
-FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP
-</span>
-</a>
-</div>
-<div class="header-icons">
-<i class="bi bi-search"></i>
-<div class="dropdown">
-<i class="bi bi-list" data-bs-toggle="dropdown" aria-expanded="false"></i>
-<ul class="dropdown-menu dropdown-menu-end">
-<li>
-<a class="dropdown-item" href="loan_registration.html">ĐĂNG KÝ TRỰC TUYẾN</a>
-</li>
-<li>
-<a class="dropdown-item" href="#footer">LIÊN HỆ</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
+  <div class="container-header">
+    <div style="flex: 0 0 auto;">
+      <a href="../index.html" title="Techcombank - VAY TIEU DUNG TIN CHAP" style="display: flex; align-items: center; text-decoration: none;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Techcombank_logo.png"
+          alt="Techcombank - Ngan hang tai chinh tieu dung hang dau Viet Nam"
+          style="object-fit: contain; height: 40px; max-width: 200px;"
+          width="150"
+          height="40">
+        <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #2a83e9; display: none;" class="logo-text">
+          TECHCOMBANK - VAY TIEU DUNG TIN CHAP
+        </span>
+      </a>
+    </div>
+    <div class="header-icons">
+      <i class="bi bi-search"></i>
+      <div class="dropdown">
+        <i class="bi bi-list" data-bs-toggle="dropdown" aria-expanded="false"></i>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="loan_registration.html">DANG KY TRUC TUYEN</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#footer">LIEN HE</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </header>
 <hr class="divider-blue" style="margin: 0" />
 <div class="container-main">
-<ul class="nav nav-tabs">
-<li class="nav-item">
-<a class="nav-link" href="step1.html">1. Nhập thông tin</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="step4.html">2. Xác thực và xử lý</a>
-</li>
-<li class="nav-item">
-<a class="nav-link active" href="step6.html">3. Hoàn thành</a>
-</li>
-</ul>
-<div id="step6" class="step-transition">
-<h5 class="step-title">Xem Hợp Đồng</h5>
-<div class="error-message" id="formError"></div>
-<p class="step-description">
-Dưới đây là hợp đồng vay tín chấp của bạn. Vui lòng kiểm tra kỹ thông tin.
-</p>
-<div class="image-section">
-<div class="canvas-container">
-<div class="canvas-loading-overlay" id="canvasLoadingOverlay">
-<div class="spinner"></div>
-<div style="text-align: center; color: #2a83e9; font-weight: 500;">Đang tải hợp đồng...</div>
-</div>
-<canvas id="contractCanvas"></canvas>
-</div>
-</div>
-<hr class="divider-blue" />
-<div class="button-group">
-<a href="step5.html" class="btn btn-secondary">QUAY LẠI</a>
-<button id="downloadContractBtn" class="btn btn-download" disabled>
-TẢI XUỐNG
-</button>
-<button id="proceedToStep7Btn" type="button" class="btn btn-primary" data-next-url="step7.html">
-TIẾP TỤC
-</button>
-</div>
-</div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="step1.html">1. Nhap thong tin</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="step4.html">2. Xac thuc va xu ly</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="step6.html">3. Hoan thanh</a>
+    </li>
+  </ul>
+  <div id="step6" class="step-transition">
+    <h5 class="step-title">Xem Ho So Hop Dong</h5>
+    <div class="error-message" id="formError"></div>
+    <p class="step-description">
+      Duoi day la ho so hop dong vay tin chap cua ban. Vui long kiem tra ky thong tin.
+    </p>
+
+    <!-- Profile display section -->
+    <div class="profile-scroll-wrapper" id="profileScrollWrapper">
+      <div class="profile-scale-wrapper" id="profileScaleWrapper">
+        <div class="profile-container" id="profileContainer">
+
+          <!-- Ngay ky -->
+          <span class="profile-field" id="field-ngay-ky"       style="left: 969px;  top: 215px;"></span>
+          <!-- Thang ky -->
+          <span class="profile-field" id="field-thang-ky"      style="left: 1081px; top: 215px;"></span>
+          <!-- Nam ky -->
+          <span class="profile-field" id="field-nam-ky"        style="left: 1183px; top: 211px;"></span>
+          <!-- Ho va ten -->
+          <span class="profile-field" id="field-ho-ten"        style="left: 257px;  top: 425px;"></span>
+          <!-- Gioi tinh -->
+          <span class="profile-field" id="field-gioi-tinh"     style="left: 831px;  top: 421px;"></span>
+          <!-- Ngay sinh -->
+          <span class="profile-field" id="field-ngay-sinh"     style="left: 1053px; top: 425px;"></span>
+          <!-- So CCCD -->
+          <span class="profile-field" id="field-so-cccd"       style="left: 349px;  top: 465px;"></span>
+          <!-- Ngay cap -->
+          <span class="profile-field" id="field-ngay-cap"      style="left: 835px;  top: 471px;"></span>
+          <!-- Que quan -->
+          <span class="profile-field" id="field-que-quan"      style="left: 255px;  top: 513px;"></span>
+          <!-- Dia chi thuong tru -->
+          <span class="profile-field" id="field-dia-chi"       style="left: 367px;  top: 555px;"></span>
+          <!-- So dien thoai -->
+          <span class="profile-field" id="field-so-dien-thoai" style="left: 393px;  top: 603px;"></span>
+          <!-- So tai khoan ngan hang -->
+          <span class="profile-field" id="field-so-tk"         style="left: 437px;  top: 647px;"></span>
+          <!-- Ten chu tai khoan -->
+          <span class="profile-field" id="field-ten-chu-tk"    style="left: 323px;  top: 691px;"></span>
+          <!-- Ten ngan hang nhan -->
+          <span class="profile-field" id="field-ten-ngan-hang" style="left: 907px;  top: 693px;"></span>
+          <!-- So tien vay bang so -->
+          <span class="profile-field" id="field-so-tien-so"    style="left: 267px;  top: 777px;"></span>
+          <!-- So tien vay bang chu -->
+          <span class="profile-field" id="field-so-tien-chu"   style="left: 767px;  top: 777px;"></span>
+          <!-- Thoi han vay -->
+          <span class="profile-field" id="field-thoi-han"      style="left: 889px;  top: 821px;"></span>
+          <!-- So tien thanh toan hang thang -->
+          <span class="profile-field" id="field-thanh-toan-thang" style="left: 485px; top: 867px;"></span>
+          <!-- Ngay den han dau tien -->
+          <span class="profile-field" id="field-ngay-den-han"  style="left: 999px;  top: 885px;"></span>
+          <!-- Ma ho so -->
+          <span class="profile-field" id="field-ma-ho-so"      style="left: 843px;  top: 1017px;"></span>
+          <!-- So thang vay -->
+          <span class="profile-field" id="field-so-thang-vay"  style="left: 477px;  top: 1019px;"></span>
+
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider-blue" />
+    <div class="button-group">
+      <a href="step5.html" class="btn btn-secondary">QUAY LAI</a>
+      <button id="downloadContractBtn" class="btn btn-download">
+        TAI XUONG
+      </button>
+      <button id="proceedToStep7Btn" type="button" class="btn btn-primary" data-next-url="step7.html">
+        TIEP TUC
+      </button>
+    </div>
+  </div>
 </div>
 <div class="footer" id="footer">
-<div class="footer-links">
-<a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a> |
-<a href="dieu-khoan-su-dung.html">Điều khoản sử dụng</a> |
-<a href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan">Liên hệ</a>
-</div>
-<p class="mt-3">© 2025 FE CREDIT BANK VIETNAM ALL RIGHTS RESERVED.</p>
+  <div class="footer-links">
+    <a href="chinh-sach-bao-mat.html">Chinh sach bao mat</a> |
+    <a href="dieu-khoan-su-dung.html">Dieu khoan su dung</a> |
+    <a href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan">Lien he</a>
+  </div>
+  <p class="mt-3">&copy; 2025 TECHCOMBANK VIETNAM ALL RIGHTS RESERVED.</p>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// Đặt bước hiện tại
+// Dat buoc hien tai
 localStorage.setItem('currentStep', 'step6.html');
 
 const SECRET_KEY = "fecredit-secret-key-v1";
-const CONTRACT_IMAGE_URL = "/assets/img/anhhopdongvay.png";
-const DEFAULT_LOAN_TYPE = "Vay tiêu dùng tín chấp";
+const PROFILE_CONTAINER_W = 1284;
+const PROFILE_CONTAINER_H = 1795;
 let userData = {};
 
-function loadUserData() {
-try {
-const encryptedData = localStorage.getItem("userData");
-if (!encryptedData) {
-showError("Không tìm thấy thông tin đăng ký. Vui lòng quay lại Bước 1.");
-showBackToStep1Button();
-return false;
-}
-const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
-const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
-if (!decryptedText) {
-showError("Không thể đọc dữ liệu. Vui lòng quay lại Bước 1.");
-showBackToStep1Button();
-return false;
-}
-userData = JSON.parse(decryptedText);
-if (!userData.fullName) {
-showError("Thông tin không đầy đủ. Vui lòng quay lại Bước 1.");
-showBackToStep1Button();
-return false;
-}
-return true;
-} catch (error) {
-console.error("Lỗi giải mã dữ liệu:", error);
-showError("Lỗi đọc dữ liệu: " + error.message);
-showBackToStep1Button();
-return false;
-}
+// ── Tien ich ────────────────────────────────────────────────────────────────
+
+function formatNumber(n) {
+  if (!n || n === "N/A" || n === 0) return "";
+  return Number(Math.floor(n)).toLocaleString("vi-VN");
 }
 
-function showBackToStep1Button() {
-const buttonGroup = document.querySelector('.button-group');
-if (buttonGroup) {
-buttonGroup.innerHTML = '<a href="step1.html" class="btn btn-primary">QUAY VỀ BƯỚC 1</a>';
+function formatCurrency(amount) {
+  if (!amount || amount === "N/A" || amount === 0) return "";
+  return formatNumber(amount) + " VND";
 }
+
+function getTodayParts() {
+  var today = new Date();
+  return {
+    day:   String(today.getDate()).padStart(2, '0'),
+    month: String(today.getMonth() + 1).padStart(2, '0'),
+    year:  String(today.getFullYear())
+  };
+}
+
+function addOneMonth(dateStr) {
+  var date;
+  if (!dateStr) {
+    date = new Date();
+  } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    var parts = dateStr.split("/");
+    date = new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+  } else if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    date = new Date(dateStr);
+  } else {
+    date = new Date();
+  }
+  if (isNaN(date.getTime())) date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  var d = String(date.getDate()).padStart(2, '0');
+  var m = String(date.getMonth() + 1).padStart(2, '0');
+  var y = date.getFullYear();
+  return d + "/" + m + "/" + y;
+}
+
+// Chuyen so sang chu (tieng Viet)
+function numberToVietnameseWords(num) {
+  if (!num || isNaN(num)) return "";
+  var units = ["", "mot", "hai", "ba", "bon", "nam", "sau", "bay", "tam", "chin"];
+  var tens  = ["", "muoi", "hai muoi", "ba muoi", "bon muoi", "nam muoi",
+               "sau muoi", "bay muoi", "tam muoi", "chin muoi"];
+
+  function readBelow1000(n) {
+    if (n === 0) return "";
+    if (n < 10) return units[n];
+    if (n < 100) {
+      var t = Math.floor(n / 10);
+      var u = n % 10;
+      return tens[t] + (u ? " " + units[u] : "");
+    }
+    var h    = Math.floor(n / 100);
+    var rest = n % 100;
+    var res  = units[h] + " tram";
+    if (rest > 0) {
+      if (rest < 10) res += " le " + units[rest];
+      else           res += " " + readBelow1000(rest);
+    }
+    return res;
+  }
+
+  num = Math.floor(Number(num));
+  if (num === 0) return "khong dong";
+
+  var groups = [
+    { div: 1000000000, label: "ty" },
+    { div: 1000000,    label: "trieu" },
+    { div: 1000,       label: "nghin" },
+    { div: 1,          label: "" }
+  ];
+
+  var parts     = [];
+  var remaining = num;
+  for (var i = 0; i < groups.length; i++) {
+    var g   = groups[i];
+    var val = Math.floor(remaining / g.div);
+    remaining   = remaining % g.div;
+    if (val > 0) {
+      parts.push(readBelow1000(val) + (g.label ? " " + g.label : ""));
+    }
+  }
+  return parts.join(" ") + " dong";
+}
+
+// ── Tai du lieu ─────────────────────────────────────────────────────────────
+
+function loadUserData() {
+  try {
+    var encryptedData = localStorage.getItem("userData");
+    if (!encryptedData) {
+      showError("Khong tim thay thong tin dang ky. Vui long quay lai Buoc 1.");
+      showBackToStep1Button();
+      return false;
+    }
+    var decryptedBytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
+    var decryptedText  = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    if (!decryptedText) {
+      showError("Khong the doc du lieu. Vui long quay lai Buoc 1.");
+      showBackToStep1Button();
+      return false;
+    }
+    userData = JSON.parse(decryptedText);
+    if (!userData.fullName) {
+      showError("Thong tin khong day du. Vui long quay lai Buoc 1.");
+      showBackToStep1Button();
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Loi giai ma du lieu:", error);
+    showError("Loi doc du lieu: " + error.message);
+    showBackToStep1Button();
+    return false;
+  }
 }
 
 function saveUserData() {
-try {
-const encryptedData = CryptoJS.AES.encrypt(
-JSON.stringify(userData), SECRET_KEY
-).toString();
-localStorage.setItem("userData", encryptedData);
-return true;
-} catch (error) {
-console.error("Lỗi lưu dữ liệu:", error);
-showError("Lỗi lưu dữ liệu. Vui lòng thử lại.");
-return false;
+  try {
+    var encryptedData = CryptoJS.AES.encrypt(
+      JSON.stringify(userData), SECRET_KEY
+    ).toString();
+    localStorage.setItem("userData", encryptedData);
+    return true;
+  } catch (error) {
+    console.error("Loi luu du lieu:", error);
+    showError("Loi luu du lieu. Vui long thu lai.");
+    return false;
+  }
 }
+
+function showBackToStep1Button() {
+  var buttonGroup = document.querySelector('.button-group');
+  if (buttonGroup) {
+    buttonGroup.innerHTML = '<a href="step1.html" class="btn btn-primary">QUAY VE BUOC 1</a>';
+  }
 }
 
 function showError(message) {
-const errorElement = $("#formError");
-errorElement.css({ "background-color": "#ffe6e6", "color": "#ff4d4f" })
-.text(message).show();
+  var errorElement = $("#formError");
+  errorElement.css({ "background-color": "#ffe6e6", "color": "#ff4d4f" })
+    .text(message).show();
 }
 
 function showSuccess(message) {
-const errorElement = $("#formError");
-errorElement.css({ "background-color": "#d4edda", "color": "#155724" })
-.text(message).show();
-setTimeout(() => {
-errorElement.css({ "background-color": "#ffe6e6", "color": "#ff4d4f" }).hide();
-}, 3000);
+  var errorElement = $("#formError");
+  errorElement.css({ "background-color": "#d4edda", "color": "#155724" })
+    .text(message).show();
+  setTimeout(function() {
+    errorElement.css({ "background-color": "#ffe6e6", "color": "#ff4d4f" }).hide();
+  }, 3000);
 }
 
-function disableButtons() {
-$("#downloadContractBtn").prop("disabled", true);
+// ── Render ho so ─────────────────────────────────────────────────────────────
+
+function renderProfileFields() {
+  var today     = getTodayParts();
+  var todayStr  = today.day + "/" + today.month + "/" + today.year;
+
+  // Xu ly so tien vay
+  var loanAmount = 0;
+  if (userData.loanAmount === "other" && userData.customLoanAmount) {
+    loanAmount = Number(String(userData.customLoanAmount).replace(/,/g, "")) || 0;
+  } else if (userData.loanAmount) {
+    loanAmount = Number(String(userData.loanAmount).replace(/,/g, "")) || 0;
+  }
+
+  // Ngay den han dau tien = hom nay + 1 thang
+  var firstDueDate = userData.firstDueDate || addOneMonth(todayStr);
+
+  // So thang vay / thoi han
+  var loanTermNum = userData.loanTerm
+    ? (parseInt(String(userData.loanTerm).trim(), 10) || 0)
+    : 0;
+  var loanTermStr = loanTermNum ? loanTermNum + " thang" : "";
+
+  var fieldMap = {
+    "field-ngay-ky":          today.day,
+    "field-thang-ky":         today.month,
+    "field-nam-ky":           today.year,
+    "field-ho-ten":           userData.fullName         || "Nguyen Van A",
+    "field-gioi-tinh":        userData.gender           || "Nam",
+    "field-ngay-sinh":        userData.dob              || "01/01/1990",
+    "field-so-cccd":          userData.cccd             || "012345678901",
+    "field-ngay-cap":         userData.cccdDate         || "01/01/2021",
+    "field-que-quan":         userData.hometown         || "Ha Noi",
+    "field-dia-chi":          userData.contactAddress   || userData.address || "123 Duong ABC, Quan 1, TP.HCM",
+    "field-so-dien-thoai":    userData.phone            || "0123456789",
+    "field-so-tk":            userData.bankAccount      || "1234567890",
+    "field-ten-chu-tk":       userData.accountHolder    || userData.fullName || "Nguyen Van A",
+    "field-ten-ngan-hang":    userData.bankName         || "Techcombank",
+    "field-so-tien-so":       loanAmount ? formatCurrency(loanAmount)           : "100,000,000 VND",
+    "field-so-tien-chu":      loanAmount ? numberToVietnameseWords(loanAmount)  : "mot tram trieu dong",
+    "field-thoi-han":         loanTermStr                                        || "36 thang",
+    "field-thanh-toan-thang": userData.monthlyPayment
+                                ? formatCurrency(userData.monthlyPayment)
+                                : "3,000,000 VND",
+    "field-ngay-den-han":     firstDueDate,
+    "field-ma-ho-so":         userData.loanCode         || "TCB000000",
+    "field-so-thang-vay":     loanTermNum ? String(loanTermNum)                 : "36"
+  };
+
+  Object.keys(fieldMap).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = fieldMap[id] || "";
+  });
 }
 
-function enableDownloadButton() {
-$("#downloadContractBtn").prop("disabled", false);
+// ── Scale de vua khung hien thi ──────────────────────────────────────────────
+
+function applyResponsiveScale() {
+  var wrapper = document.getElementById("profileScrollWrapper");
+  var scaleEl = document.getElementById("profileScaleWrapper");
+  if (!wrapper || !scaleEl) return;
+  var availW  = wrapper.clientWidth || 640;
+  var scale   = Math.min(1, availW / PROFILE_CONTAINER_W);
+  scaleEl.style.transform = "scale(" + scale + ")";
+  scaleEl.style.width     = PROFILE_CONTAINER_W + "px";
+  // Adjust scroll-wrapper height so it does not leave dead space
+  // The extra 32px accounts for wrapper border + padding
+  var SCROLL_WRAPPER_PADDING = 32;
+  wrapper.style.height    = Math.round(PROFILE_CONTAINER_H * scale + SCROLL_WRAPPER_PADDING) + "px";
 }
 
-function enableProceedButton() {
-$("#proceedToStep7Btn").prop("disabled", false);
-}
-
-function showCanvasLoading() {
-$("#canvasLoadingOverlay").addClass("show");
-}
-
-function hideCanvasLoading() {
-$("#canvasLoadingOverlay").removeClass("show");
-}
-
-function renderContractCanvas() {
-const canvas = document.getElementById("contractCanvas");
-if (!canvas) {
-showError("Không tìm thấy khu vực hiển thị hợp đồng.");
-return;
-}
-if (!canvas.getContext) {
-showError("Trình duyệt không hỗ trợ Canvas. Vui lòng nâng cấp trình duyệt.");
-disableButtons();
-return;
-}
-const ctx = canvas.getContext("2d");
-const image = new Image();
-showCanvasLoading();
-canvas.classList.add("loading");
-image.onload = function() {
-hideCanvasLoading();
-canvas.classList.remove("loading");
-canvas.width = 595;
-canvas.height = 844;
-ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-drawUserDataOnCanvas(ctx);
-enableDownloadButton();
-if (userData.isContractDownloaded) {
-enableProceedButton();
-}
-};
-image.onerror = function() {
-hideCanvasLoading();
-canvas.classList.remove("loading");
-showError("Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau.");
-disableButtons();
-};
-image.src = CONTRACT_IMAGE_URL;
-}
-
-function drawUserDataOnCanvas(ctx) {
-function formatNumber(number) {
-if (!number || number === "N/A" || number === 0) return "";
-return Number(Math.floor(number)).toLocaleString("vi-VN");
-}
-function formatCurrency(amount) {
-if (!amount || amount === "N/A" || amount === 0) return "";
-return formatNumber(amount) + " VNĐ";
-}
-function getTodayFormatted() {
-const today = new Date();
-const d = String(today.getDate()).padStart(2, '0');
-const m = String(today.getMonth()+1).padStart(2, '0');
-const y = today.getFullYear();
-return `${d}/${m}/${y}`;
-}
-function calculateDueDatePlusOneMonth(dateStr) {
-if (!dateStr) {
-const today = new Date();
-today.setMonth(today.getMonth() + 1);
-const d = String(today.getDate()).padStart(2, '0');
-const m = String(today.getMonth()+1).padStart(2, '0');
-const y = today.getFullYear();
-return `${d}/${m}/${y}`;
-}
-let date;
-if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
-const [d, m, y] = dateStr.split("/");
-date = new Date(y, m - 1, d);
-} else if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-date = new Date(dateStr);
-} else {
-return "";
-}
-if (isNaN(date.getTime())) return "";
-date.setMonth(date.getMonth() + 1);
-const d2 = String(date.getDate()).padStart(2, '0');
-const m2 = String(date.getMonth()+1).padStart(2, '0');
-const y2 = date.getFullYear();
-return `${d2}/${m2}/${y2}`;
-}
-const todayStr = getTodayFormatted();
-const dueDateStr = calculateDueDatePlusOneMonth(todayStr);
-const fields = [
-{ value: userData.fullName || "", x: 150, y: 135, font: "bold 12px Arial", color: "#000" },
-{ value: userData.dob || "", x: 460, y: 135, font: "10px Arial", color: "#000" },
-{ value: userData.cccd || "", x: 100, y: 175, font: "bold 11px Arial", color: "#000" },
-{ value: userData.phone || "", x: 100, y: 210, font: "bold 11px Arial", color: "#000" },
-{ value: userData.contactAddress || "", x: 100, y: 235, font: "10px Arial", color: "#000" },
-{ value: userData.email || "", x: 100, y: 255, font: "10px Arial", color: "#000" },
-{ value: formatCurrency(userData.monthlyIncome), x: 150, y: 435, font: "11px Arial", color: "#000" },
-{ value: userData.fullName || "", x: 150, y: 565, font: "bold 11px Arial", color: "#000" },
-{ value: todayStr, x: 100, y: 580, font: "10px Arial", color: "#000" },
-{ value: dueDateStr, x: 375, y: 580, font: "10px Arial", color: "#000" },
-{ value: formatCurrency(userData.loanAmount), x: 260, y: 590, font: "bold 11px Arial", color: "#000" },
-{ value: formatCurrency(userData.monthlyPayment), x: 200, y: 605, font: "11px Arial", color: "#000" },
-{ value: formatCurrency(userData.loanAmount), x: 330, y: 730, font: "bold 11px Arial", color: "#000" },
-{ value: formatCurrency(userData.loanAmount), x: 165, y: 747, font: "bold 11px Arial", color: "#000" },
-{ value: DEFAULT_LOAN_TYPE, x: 165, y: 785, font: "10px Arial", color: "#000" }
-];
-fields.forEach(field => {
-if (field.value) {
-ctx.font = field.font;
-ctx.fillStyle = field.color;
-ctx.fillText(field.value, field.x, field.y);
-}
-});
-}
+// ── Tai PDF ───────────────────────────────────────────────────────────────────
 
 function downloadContractAsPDF() {
-const canvas = document.getElementById("contractCanvas");
-const btn = $("#downloadContractBtn");
-if (!canvas || !canvas.width || !canvas.height) {
-showError("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
-return;
-}
-try {
-const originalText = btn.html();
-btn.prop("disabled", true);
-btn.html('<span class="spinner-small"></span>ĐANG TẢI...');
-if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
-throw new Error("Thư viện jsPDF chưa được tải");
-}
-const { jsPDF } = window.jspdf;
-const pdf = new jsPDF({ orientation: "p", unit: "px", format: [canvas.width, canvas.height] });
-pdf.addImage(canvas.toDataURL("image/png", 1.0), "PNG", 0, 0, canvas.width, canvas.height);
-const loanCode = (userData.loanCode || "SHBVN000000").replace(/[^a-zA-Z0-9_-]/g, "");
-const fileName = `HopDongVay_${loanCode}.pdf`;
-pdf.save(fileName);
-userData.isContractDownloaded = true;
-userData.contractDownloadedAt = new Date().toISOString();
-if (saveUserData()) {
-showSuccess("Hợp đồng đã được tải xuống thành công!");
-enableProceedButton();
-}
-btn.prop("disabled", false);
-btn.html(originalText);
-} catch (error) {
-console.error("Lỗi tải PDF:", error);
-showError("Không thể tải hợp đồng. Lỗi: " + error.message);
-btn.prop("disabled", false);
-btn.html("TẢI XUỐNG");
-}
+  var btn = $("#downloadContractBtn");
+  if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+    showError("Thu vien jsPDF chua duoc tai. Vui long thu lai.");
+    return;
+  }
+  if (!window.html2canvas) {
+    showError("Thu vien html2canvas chua duoc tai. Vui long thu lai.");
+    return;
+  }
+  var originalText = btn.html();
+  btn.prop("disabled", true).html('<span class="spinner-small"></span>DANG TAI...');
+
+  var profileEl = document.getElementById("profileContainer");
+  html2canvas(profileEl, { scale: 1, useCORS: true, logging: false })
+    .then(function(canvas) {
+      try {
+        var jsPDF    = window.jspdf.jsPDF;
+        var imgData  = canvas.toDataURL("image/jpeg", 0.9);
+        var pdf      = new jsPDF({ orientation: "p", unit: "px",
+          format: [PROFILE_CONTAINER_W, PROFILE_CONTAINER_H] });
+        pdf.addImage(imgData, "JPEG", 0, 0, PROFILE_CONTAINER_W, PROFILE_CONTAINER_H);
+        var loanCode = (userData.loanCode || "TCB000000").replace(/[^a-zA-Z0-9_-]/g, "");
+        pdf.save("HoSoVay_" + loanCode + ".pdf");
+        userData.isContractDownloaded = true;
+        userData.contractDownloadedAt = new Date().toISOString();
+        if (saveUserData()) {
+          showSuccess("Ho so hop dong da duoc tai xuong thanh cong!");
+        }
+      } catch (err) {
+        console.error("Loi tao PDF:", err);
+        showError("Khong the tao file PDF. Loi: " + err.message);
+      }
+      btn.prop("disabled", false).html(originalText);
+    })
+    .catch(function(err) {
+      console.error("Loi chup man hinh:", err);
+      showError("Khong the chup noi dung ho so. Loi: " + err.message);
+      btn.prop("disabled", false).html(originalText);
+    });
 }
 
 function proceedToStep7() {
-userData.currentStep = 7;
-userData.lastStep6CompletedAt = new Date().toISOString();
-if (saveUserData()) {
-window.location.href = "step7.html";
-}
+  userData.currentStep          = 7;
+  userData.lastStep6CompletedAt = new Date().toISOString();
+  if (saveUserData()) {
+    window.location.href = "step7.html";
+  }
 }
 
+// ── Khoi dong ────────────────────────────────────────────────────────────────
+
 $(document).ready(function() {
-disableButtons();
-const loaded = loadUserData();
-if (!loaded) return;
-renderContractCanvas();
-$("#downloadContractBtn").on("click", function() {
-if (!$(this).prop("disabled")) downloadContractAsPDF();
-});
-$("#proceedToStep7Btn").on("click", function() {
-if (!$(this).prop("disabled")) proceedToStep7();
-});
+  var loaded = loadUserData();
+  if (!loaded) return;
+
+  renderProfileFields();
+  applyResponsiveScale();
+
+  $(window).on("resize", applyResponsiveScale);
+
+  $("#downloadContractBtn").on("click", function() {
+    if (!$(this).prop("disabled")) downloadContractAsPDF();
+  });
+  $("#proceedToStep7Btn").on("click", function() {
+    if (!$(this).prop("disabled")) proceedToStep7();
+  });
 });
 </script>
 </body>
