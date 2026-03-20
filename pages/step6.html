@@ -162,35 +162,223 @@
       }
       .canvas-container {
           position: relative;
-          margin: 20px auto;
+          margin: 16px auto;
           max-width: 100%;
           width: 100%;
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
+          text-align: center;
       }
-      
-      #contractCanvas {
+
+      /* Image overlay container - position: relative để chứa các text overlay */
+      .image-overlay-container {
+          position: relative;
+          margin: 16px auto;
+          max-width: 100%;
+          width: 100%;
+          display: inline-block;
+      }
+
+      /* Ảnh nền hợp đồng vay */
+      .contract-image {
           width: 100%;
           max-width: 100%;
           height: auto;
           display: block;
           border: 2px solid #e9ecef;
           border-radius: 8px;
+          background-color: #ffffff;
+      }
+
+      .contract-image.loading {
+          opacity: 0.5;
+          background-color: #f1f1f1;
+      }
+
+      /* Text overlay base styles - position: absolute để đè lên ảnh */
+      .text-overlay {
+          position: absolute;
+          z-index: 10;
+          font-family: Arial, 'Times New Roman', sans-serif;
+          font-weight: 600;
+          color: #000000;
+          white-space: nowrap;
+          pointer-events: none;
+      }
+
+      /* Các vị trí text overlay (tính theo % dựa trên canvas 1284x1795) */
+
+      /* Họ và tên (195, 235) */
+      .text-overlay.overlay-full-name {
+          top: 13.09%;   /* 235/1795 */
+          left: 15.19%;  /* 195/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+          max-width: 30%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      /* Giới tính (658, 235) */
+      .text-overlay.overlay-gender {
+          top: 13.09%;   /* 235/1795 */
+          left: 51.25%;  /* 658/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Ngày sinh (820, 235) */
+      .text-overlay.overlay-dob {
+          top: 13.09%;   /* 235/1795 */
+          left: 63.86%;  /* 820/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Số CMND/CCCD (235, 262) */
+      .text-overlay.overlay-cccd {
+          top: 14.60%;   /* 262/1795 */
+          left: 18.30%;  /* 235/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Ngày cấp (615, 262) */
+      .text-overlay.overlay-cccd-date {
+          top: 14.60%;   /* 262/1795 */
+          left: 47.90%;  /* 615/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Quê quán (200, 288) */
+      .text-overlay.overlay-hometown {
+          top: 16.04%;   /* 288/1795 */
+          left: 15.58%;  /* 200/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+          max-width: 50%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      /* Hộ khẩu thường trú (250, 314) */
+      .text-overlay.overlay-contact-address {
+          top: 17.49%;   /* 314/1795 */
+          left: 19.47%;  /* 250/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+          max-width: 50%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      /* Số điện thoại (285, 340) */
+      .text-overlay.overlay-phone {
+          top: 18.94%;   /* 340/1795 */
+          left: 22.19%;  /* 285/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Số tài khoản (310, 366) */
+      .text-overlay.overlay-bank-account {
+          top: 20.39%;   /* 366/1795 */
+          left: 24.14%;  /* 310/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Chủ tài khoản (205, 392) */
+      .text-overlay.overlay-account-owner {
+          top: 21.84%;   /* 392/1795 */
+          left: 15.97%;  /* 205/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+          max-width: 30%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      /* Tên ngân hàng (645, 392) */
+      .text-overlay.overlay-bank-name {
+          top: 21.84%;   /* 392/1795 */
+          left: 50.23%;  /* 645/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+          max-width: 30%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      /* Số tiền vay (205, 435) */
+      .text-overlay.overlay-loan-amount {
+          top: 24.23%;   /* 435/1795 */
+          left: 15.97%;  /* 205/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Lãi suất (185, 461) */
+      .text-overlay.overlay-interest-rate {
+          top: 25.68%;   /* 461/1795 */
+          left: 14.41%;  /* 185/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Thời hạn vay (745, 461) */
+      .text-overlay.overlay-loan-term {
+          top: 25.68%;   /* 461/1795 */
+          left: 58.02%;  /* 745/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Thanh toán hàng tháng (330, 487) */
+      .text-overlay.overlay-monthly-payment {
+          top: 27.13%;   /* 487/1795 */
+          left: 25.70%;  /* 330/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+      /* Tên người vay - BÊN VAY (755, 955) */
+      .text-overlay.overlay-signer-name {
+          top: 53.20%;   /* 955/1795 */
+          left: 58.80%;  /* 755/1284 */
+          font-size: clamp(7.5px, 1.2vw, 12px);
+      }
+
+      /* Canvas ẩn - dùng cho PDF */
+      #contractCanvas {
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          display: none;
+          border: 2px solid #e9ecef;
+          border-radius: 8px;
           image-rendering: -webkit-optimize-contrast;
           image-rendering: crisp-edges;
       }
-      
+
       @media (max-width: 768px) {
           .canvas-container {
-              margin: 10px 0;
-              padding: 0 10px;
+              margin: 12px 0;
+              padding: 0 8px;
           }
-          
-          #contractCanvas {
+          .image-overlay-container {
+              margin: 12px 0;
+          }
+          .contract-image {
               max-width: calc(100vw - 40px);
               border-radius: 4px;
           }
+          /* Điều chỉnh font size cho mobile */
+          .text-overlay {
+              font-weight: 500;
+          }
+          .text-overlay.overlay-full-name,
+          .text-overlay.overlay-gender,
+          .text-overlay.overlay-dob {
+              font-size: 7px;
+          }
+          .text-overlay.overlay-cccd,
+          .text-overlay.overlay-cccd-date,
+          .text-overlay.overlay-hometown,
+          .text-overlay.overlay-contact-address,
+          .text-overlay.overlay-phone,
+          .text-overlay.overlay-bank-account,
+          .text-overlay.overlay-account-owner,
+          .text-overlay.overlay-bank-name {
+              font-size: 7px;
+          }
+          .text-overlay.overlay-loan-amount,
+          .text-overlay.overlay-interest-rate,
+          .text-overlay.overlay-loan-term,
+          .text-overlay.overlay-monthly-payment,
+          .text-overlay.overlay-signer-name {
+              font-size: 6px;
+          }
       }
+
+      @media (max-width: 480px) {
+          .text-overlay {
+              font-size: 7px !important;
+              font-weight: 400;
+          }
+      }
+
       #contractCanvas.loading {
           opacity: 0.5;
           background: rgba(248, 249, 250, 0.9);
@@ -334,11 +522,9 @@
       <div class="container-header">
         <div style="flex: 0 0 auto;">
           <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
-            <img src="https://thuvienvector.vn/wp-content/uploads/2025/08/dien-may-xanh-logo-png.jpg" 
-                 alt="FE CREDIT - Ngân hàng tài chính tiêu dùng hàng đầu Việt Nam" 
-                 style="object-fit: contain; height: 40px; max-width: 200px;"
-                 width="150"
-                 height="40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Techcombank_logo.png" 
+                 alt="Techcombank Logo" 
+                 style="object-fit: contain; height: 40px; max-width: 200px;">
             <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #2a83e9; display: none;" class="logo-text">
               FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP
             </span>
@@ -393,7 +579,39 @@
               <div class="spinner"></div>
               <div style="text-align: center; color: #2a83e9; font-weight: 500;">Đang tải hợp đồng...</div>
             </div>
-            <canvas id="contractCanvas"></canvas>
+
+            <!-- Image Overlay Container: position: relative để chứa các text overlay -->
+            <div class="image-overlay-container" id="imageOverlayContainer">
+              <!-- Ảnh nền hợp đồng vay -->
+              <img
+                id="contractImage"
+                class="contract-image loading"
+                src=""
+                alt="Hợp đồng vay tín chấp"
+                aria-label="Hợp đồng vay tín chấp"
+              />
+
+              <!-- Text overlay với position: absolute và z-index cao -->
+              <span class="text-overlay overlay-full-name" id="overlayFullName"></span>
+              <span class="text-overlay overlay-gender" id="overlayGender"></span>
+              <span class="text-overlay overlay-dob" id="overlayDob"></span>
+              <span class="text-overlay overlay-cccd" id="overlayCccd"></span>
+              <span class="text-overlay overlay-cccd-date" id="overlayCccdDate"></span>
+              <span class="text-overlay overlay-hometown" id="overlayHometown"></span>
+              <span class="text-overlay overlay-contact-address" id="overlayContactAddress"></span>
+              <span class="text-overlay overlay-phone" id="overlayPhone"></span>
+              <span class="text-overlay overlay-bank-account" id="overlayBankAccount"></span>
+              <span class="text-overlay overlay-account-owner" id="overlayAccountOwner"></span>
+              <span class="text-overlay overlay-bank-name" id="overlayBankName"></span>
+              <span class="text-overlay overlay-loan-amount" id="overlayLoanAmount"></span>
+              <span class="text-overlay overlay-interest-rate" id="overlayInterestRate"></span>
+              <span class="text-overlay overlay-loan-term" id="overlayLoanTerm"></span>
+              <span class="text-overlay overlay-monthly-payment" id="overlayMonthlyPayment"></span>
+              <span class="text-overlay overlay-signer-name" id="overlaySignerName"></span>
+            </div>
+
+            <!-- Canvas ẩn - dùng cho tải PDF -->
+            <canvas id="contractCanvas" aria-label="Hợp đồng vay tín chấp" style="display: none;"></canvas>
           </div>
         </div>
         <hr class="divider-blue" />
@@ -444,7 +662,9 @@
       // =====================================================================
       
       const SECRET_KEY = "fecredit-secret-key-v1"; // Unified encryption key across all steps
-      const CONTRACT_IMAGE_URL = "/assets/img/anhhopdongvay.png"; // Absolute URL for deployment
+      // Primary URL with local fallback
+      const CONTRACT_IMAGE_URL = "/assets/img/anhhopdongvay.png";
+      const CONTRACT_IMAGE_FALLBACK = "../assets/img/anhhopdongvay.png";
       const DEFAULT_LOAN_TYPE = "Vay tiêu dùng tín chấp";
       
       let userData = {};
@@ -597,69 +817,188 @@
       }
       
       // =====================================================================
-      // CANVAS RENDERING
+      // IMAGE OVERLAY RENDERING
       // =====================================================================
-      
+
       /**
-       * Render hình ảnh hợp đồng vào canvas
+       * Trả về ngày hiện tại định dạng dd/mm/yyyy
        */
-      function renderContractCanvas() {
+      function getTodayFormatted() {
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      }
+
+      /**
+       * Sanitize giá trị - loại bỏ các giá trị không hợp lệ
+       */
+      function sanitizeValue(value) {
+        if (value === null || value === undefined) return "";
+        if (typeof value === "number") {
+          return Number.isFinite(value) && value !== 0 ? String(value) : "";
+        }
+        if (typeof value === "string") {
+          const trimmed = value.trim();
+          if (!trimmed) return "";
+          const upper = trimmed.toUpperCase();
+          if (upper === "N/A" || upper === "NULL" || upper === "UNDEFINED") {
+            return "";
+          }
+          return trimmed;
+        }
+        return "";
+      }
+
+      /**
+       * Normalize tên ngân hàng
+       */
+      function normalizeBankName(raw) {
+        const value = sanitizeValue(raw);
+        if (!value) return "";
+        return value.replace(/\s+/g, " ");
+      }
+
+      /**
+       * Định dạng số tiền có hậu tố VNĐ
+       */
+      function formatCurrencyDisplay(amount) {
+        const sanitized = sanitizeValue(amount);
+        if (!sanitized || Number(sanitized) === 0) return "0 VNĐ";
+        return Number(Math.floor(Number(sanitized))).toLocaleString("vi-VN") + " VNĐ";
+      }
+
+      /**
+       * Cập nhật các text overlay với dữ liệu user
+       */
+      function updateTextOverlays() {
+        const fullName = sanitizeValue(userData.fullName);
+        const gender = sanitizeValue(userData.gender) || "Nam";
+        const dob = sanitizeValue(userData.dob);
+        const cccd = sanitizeValue(userData.cccd);
+        const cccdDate = sanitizeValue(userData.cccdDate) || "15/05/2021";
+        const hometown = sanitizeValue(userData.hometown);
+        const contactAddress = sanitizeValue(userData.contactAddress);
+        const phone = sanitizeValue(userData.phone);
+        const bankAccount = sanitizeValue(userData.bankAccount);
+        const bankName = normalizeBankName(userData.bankName) || "Techcombank";
+        const loanAmount = formatCurrencyDisplay(userData.loanAmount);
+        const loanTerm = sanitizeValue(userData.loanTerm) || "24";
+        const monthlyPayment = formatCurrencyDisplay(userData.monthlyPayment);
+
+        // Cập nhật các text overlay - tên in hoa
+        $("#overlayFullName").text(fullName.toUpperCase());
+        $("#overlayGender").text(gender.toUpperCase());
+        $("#overlayDob").text(dob);
+        $("#overlayCccd").text(cccd);
+        $("#overlayCccdDate").text(cccdDate);
+        $("#overlayHometown").text(hometown.toUpperCase());
+        $("#overlayContactAddress").text(contactAddress.toUpperCase());
+        $("#overlayPhone").text(phone);
+        $("#overlayBankAccount").text(bankAccount);
+        $("#overlayAccountOwner").text(fullName.toUpperCase());
+        $("#overlayBankName").text(bankName);
+        $("#overlayLoanAmount").text(loanAmount);
+        $("#overlayInterestRate").text("0.6%");
+        $("#overlayLoanTerm").text(loanTerm);
+        $("#overlayMonthlyPayment").text(monthlyPayment);
+        $("#overlaySignerName").text(fullName.toUpperCase());
+      }
+
+      /**
+       * Render canvas ẩn với dữ liệu user cho việc tải PDF
+       */
+      function renderCanvasForPDF(image) {
         const canvas = document.getElementById("contractCanvas");
-        if (!canvas) {
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+
+        // Thiết lập kích thước chuẩn theo ảnh gốc 1284x1795
+        canvas.width = 1284;
+        canvas.height = 1795;
+
+        // Vẽ ảnh nền
+        ctx.drawImage(image, 0, 0, 1284, 1795);
+
+        // Vẽ dữ liệu lên canvas (cho PDF)
+        drawUserDataOnCanvas(ctx);
+      }
+
+      /**
+       * Render hình ảnh hợp đồng vào img element và cập nhật text overlays
+       */
+      function renderImageOverlay() {
+        const imgElement = document.getElementById("contractImage");
+        const canvas = document.getElementById("contractCanvas");
+
+        if (!imgElement) {
           showError("Không tìm thấy khu vực hiển thị hợp đồng.");
           return;
         }
-        
-        // Check browser support for Canvas
-        if (!canvas.getContext) {
-          showError("Trình duyệt không hỗ trợ Canvas. Vui lòng nâng cấp trình duyệt.");
-          // Disable buttons to prevent further errors
-          const downloadBtn = document.getElementById("downloadContractBtn");
-          const proceedBtn = document.getElementById("proceedToStep7Btn");
-          if (downloadBtn) downloadBtn.disabled = true;
-          if (proceedBtn) proceedBtn.disabled = true;
-          return;
-        }
-        
-        const ctx = canvas.getContext("2d");
-        const image = new Image();
-        
+
         // Hiển thị loading
         showCanvasLoading();
-        canvas.classList.add("loading");
-        
-        image.onload = function() {
+        imgElement.classList.add("loading");
+
+        // Biến để track việc thử fallback
+        let triedFallback = false;
+
+        const handleImageLoad = function() {
           hideCanvasLoading();
-          canvas.classList.remove("loading");
-          
-          // RẤT QUAN TRỌNG: Thiết lập canvas đúng bằng kích thước ảnh gốc 1284x1795
-          canvas.width = 1284;
-          canvas.height = 1795;
-          
-          // Vẽ ảnh nền
-          ctx.drawImage(image, 0, 0, 1284, 1795);
-          
-          // Vẽ dữ liệu
-          drawUserDataOnCanvas(ctx);
-          
-          // Enable download button khi canvas load xong
+          imgElement.classList.remove("loading");
+
+          // Tạo image object để dùng cho canvas PDF
+          const loadedImage = new Image();
+          loadedImage.crossOrigin = "anonymous";
+          loadedImage.onload = function() {
+            renderCanvasForPDF(loadedImage);
+          };
+          loadedImage.src = imgElement.src;
+
+          // Cập nhật text overlays với dữ liệu user
+          updateTextOverlays();
+
+          // Enable download button khi load xong
           enableDownloadButton();
-          
+
           // Nếu đã tải trước đó, enable luôn nút tiếp tục
           if (userData.isContractDownloaded) {
             enableProceedButton();
           }
         };
-        
-        image.onerror = function() {
-          hideCanvasLoading();
-          canvas.classList.remove("loading");
-          console.error("Image failed to load from:", CONTRACT_IMAGE_URL);
-          showError("Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau.");
-          disableButtons();
+
+        const handleImageError = function() {
+          // Nếu chưa thử fallback, thử load từ local
+          if (!triedFallback) {
+            triedFallback = true;
+            console.log("Primary image URL failed, trying fallback...");
+            imgElement.src = CONTRACT_IMAGE_FALLBACK;
+          } else {
+            // Nếu cả primary và fallback đều fail
+            hideCanvasLoading();
+            imgElement.classList.remove("loading");
+            console.error("Image failed to load from:", CONTRACT_IMAGE_URL);
+            showError("Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau.");
+            disableButtons();
+          }
         };
-        
-        image.src = CONTRACT_IMAGE_URL;
+
+        // Thiết lập event handlers
+        imgElement.onload = handleImageLoad;
+        imgElement.onerror = handleImageError;
+
+        // Bắt đầu load ảnh
+        imgElement.src = CONTRACT_IMAGE_URL;
+      }
+
+      /**
+       * Render hợp đồng (delegate sang renderImageOverlay)
+       * @deprecated Sử dụng renderImageOverlay() thay thế
+       */
+      function renderContractCanvas() {
+        renderImageOverlay();
       }
       
       /**
@@ -821,7 +1160,7 @@
           return;
         }
         
-        // Render canvas với dữ liệu thật
+        // Render image overlay với dữ liệu thật
         renderContractCanvas();
         
         // Event handlers
