@@ -256,38 +256,9 @@
             const currentStep = localStorage.getItem('currentStep');
             
             // Trường hợp 1: Đã hoàn tất hồ sơ
-            if (applicationStatus === APPLICATION_STATUS_COMPLETED) {
-                // Xóa nội dung form và hiển thị thông báo
-                const formContainer = document.querySelector('.step1-container');
-                if (formContainer) {
-                    formContainer.innerHTML = `
-                        <div style="text-align: center; padding: 40px 20px;">
-                            <div style="font-size: 60px; color: #ed1c24; margin-bottom: 20px;">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h3 style="color: #ed1c24; margin-bottom: 20px;">Đả có hồ sơ đăng ký tại hệ thống</h3>
-                            <p style="font-size: 16px; color: #666; line-height: 1.8; max-width: 500px; margin: 0 auto;">
-                               Bạn đả có hồ sơ tại hệ thống hoặc đang trong quá trình xét duyệt. Vui lòng liên hệ hỗ trợ hoặc nhân viên làm hồ sơ để được hỗ trợ và giải ngân!
-                            </p>
-                            <div style="margin-top: 30px;">
-                                <a href="https://zalo.me/84928765807" 
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="btn btn-primary"
-                                   style="background: linear-gradient(135deg, #ed1c24 0%, #ed1c24 100%); 
-                                          border: none; 
-                                          padding: 15px 40px; 
-                                          font-weight: 700; 
-                                          border-radius: 10px; 
-                                          text-decoration: none; 
-                                          display: inline-block;">
-                                    <i class="fas fa-phone me-2"></i>Liên hệ ngay
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                }
-                return; // Dừng lại, không thực hiện logic tiếp theo
+if (applicationStatus === APPLICATION_STATUS_COMPLETED) {
+                window.location.href = 'step8.html';
+                return; 
             }
             
             // Trường hợp 2: Đang làm dở - chuyển hướng về bước đã lưu
@@ -553,7 +524,3 @@
     </script>
 </body>
 </html>
-
-
-
-
