@@ -1394,11 +1394,38 @@
       }
 
       // Lazy Load Images
+      function getSafeImageSrc(rawSrc) {
+        if (!rawSrc || typeof rawSrc !== "string") {
+          return null;
+        }
+
+        // Disallow obvious javascript: or other dangerous protocols
+        const trimmed = rawSrc.trim();
+
+        // Allow protocol-relative URLs (starting with "//") and relative paths
+        if (trimmed.startsWith("//") || trimmed.startsWith("/") || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
+          return trimmed;
+        }
+
+        try {
+          const url = new URL(trimmed, window.location.href);
+          if (url.protocol === "http:" || url.protocol === "https:") {
+            return url.toString();
+          }
+        } catch (e) {
+          // Invalid URL, treat as unsafe
+        }
+
+        return null;
+      }
+
       function lazyLoadImages() {
         const images = document.querySelectorAll("img.lazy");
         images.forEach((img) => {
-          if (img.getAttribute("data-src")) {
-            img.src = img.getAttribute("data-src");
+          const rawSrc = img.getAttribute("data-src");
+          const safeSrc = getSafeImageSrc(rawSrc);
+          if (safeSrc) {
+            img.src = safeSrc;
             img.removeAttribute("data-src");
             img.classList.remove("lazy");
           }
